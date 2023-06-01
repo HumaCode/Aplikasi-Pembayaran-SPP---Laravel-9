@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User as Model;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -29,7 +30,14 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            'model'     => new User(),
+            'method'    => 'POST',
+            'route'     => 'user.store',
+            'button'    => 'Simpan Data'
+        ];
+
+        return view('operator.user_form', $data);
     }
 
     /**
@@ -40,7 +48,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $requestData = $request->validate([
+            'name'      => 'required',
+            'email'     => 'required|unique:users',
+            'nohp'      => 'required|unique:users',
+            'akses'     => 'required|in:operator,admin',
+            'password'  => 'required'
+        ]);
+
+        $requestData['password'] = bcrypt($requestData['password']);
+        Model::create($requestData);
+
+        flash('Data berhasil ditambahkan');
+
+        return back();
     }
 
     /**
