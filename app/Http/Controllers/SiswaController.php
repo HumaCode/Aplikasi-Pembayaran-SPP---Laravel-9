@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Siswa;
-use App\Http\Requests\StoreSiswaRequest;
-use App\Http\Requests\UpdateSiswaRequest;
+use App\Models\Siswa as Model;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class SiswaController extends Controller
 {
+    private $viewIndex      = 'siswa_index';
+    private $viewCreate     = 'siswa_form';
+    private $viewEdit       = 'siswa_form';
+    private $viewShow       = 'siswa_show';
+    private $routePrefix    = 'siswa';
+
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +22,12 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        //
+
+        return view('operator.' . $this->viewIndex, [
+            'models'        => Model::latest()->paginate(50),
+            'title'         => 'Data Siswa',
+            'routePrefix'   => $this->routePrefix,
+        ]);
     }
 
     /**
@@ -25,27 +37,50 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            'model'     => new User(),
+            'method'    => 'POST',
+            'route'     => $this->routePrefix . '.store',
+            'button'    => 'Simpan Data',
+            'title'     => 'Tambah Data Wali Murid',
+        ];
+
+        return view('operator.' . $this->viewCreate, $data);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreSiswaRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreSiswaRequest $request)
+    public function store(Request $request)
     {
-        //
+        $requestData = $request->validate([
+            'name'      => 'required',
+            'email'     => 'required|unique:users',
+            'nohp'      => 'required|unique:users',
+            'password'  => 'required'
+        ]);
+
+        $requestData['password'] = bcrypt($requestData['password']);
+        $requestData['akses'] = 'wali';
+
+        Model::create($requestData);
+
+        flash('Data berhasil ditambahkan');
+
+        return back();
+        // return redirect()->route('/wali');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Siswa  $siswa
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Siswa $siswa)
+    public function show($id)
     {
         //
     }
@@ -53,34 +88,74 @@ class SiswaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Siswa  $siswa
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Siswa $siswa)
+    public function edit($id)
     {
-        //
+        $data = [
+            'model'     => User::findOrFail($id),
+            'method'    => 'PUT',
+            'route'     => [$this->routePrefix . '.update', $id],
+            'button'    => 'Ubah Data',
+            'title'     => 'Ubah Data Wali Murid',
+        ];
+
+        return view('operator.' . $this->viewEdit, $data);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateSiswaRequest  $request
-     * @param  \App\Models\Siswa  $siswa
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSiswaRequest $request, Siswa $siswa)
+    public function update(Request $request, $id)
     {
-        //
+        $requestData = $request->validate([
+            'name'      => 'required',
+            'email'     => 'required|unique:users,email,' . $id,
+            'nohp'      => 'required|unique:users,nohp,' . $id,
+            'password'  => 'nullable'
+        ]);
+
+        $model = Model::findOrFail($id);
+        if ($requestData['password'] == "") {
+            unset($requestData['password']);
+        } else {
+            $requestData['password'] = bcrypt($requestData['password']);
+        }
+
+        $model->fill($requestData);
+        $model->save();
+
+        flash('Data berhasil diubah');
+
+        // return redirect()->route('operator.wali');
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Siswa  $siswa
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Siswa $siswa)
+    public function destroy($id)
     {
-        //
+        // return auth()->user()->id;
+
+        $model = User::findOrFail($id);
+
+        if ($model->id == 1 || $model->id == auth()->user()->id) {
+            flash('Data tidak dapat dihapus')->error();
+            return back();
+        }
+
+        $model->delete();
+
+        flash('Data berhasil dihapus');
+        return back();
     }
 }

@@ -129,11 +129,19 @@
                         </a>
                     </li>
 
-                    <!-- user -->
+                    <!-- wali -->
                     <li class="menu-item {{ \Route::is('wali.*') ? 'active' : '' }}">
                         <a href="{{ route('wali.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Data Wali Murid</div>
+                        </a>
+                    </li>
+
+                    <!-- siswa -->
+                    <li class="menu-item {{ \Route::is('siswa.*') ? 'active' : '' }}">
+                        <a href="{{ route('siswa.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-collection"></i>
+                            <div data-i18n="Basic">Data Siswa</div>
                         </a>
                     </li>
 
