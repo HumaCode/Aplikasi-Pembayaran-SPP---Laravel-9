@@ -112,14 +112,22 @@
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
                     <li class="menu-item active">
-                        <a href="index.html" class="menu-link">
+                        <a href="{{ route('operator.beranda') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                            <div data-i18n="Analytics">Dashboard</div>
+                            <div data-i18n="Analytics">Beranda</div>
                         </a>
                     </li>
 
 
-                    <!-- Cards -->
+                    <!-- user -->
+                    <li class="menu-item">
+                        <a href="{{ route('user.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-collection"></i>
+                            <div data-i18n="Basic">User</div>
+                        </a>
+                    </li>
+
+                    <!-- logout -->
                     <li class="menu-item">
                         <a href="{{ route('logout') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
