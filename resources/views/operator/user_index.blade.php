@@ -6,11 +6,11 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-4">
-            <div class="card-header">Data User</div>
+            <div class="card-header">{{ $title }}</div>
 
             <div class="card-body">
 
-                <a href="{{ route('user.create') }}" class="btn btn-primary btn-sm mb-2">Tambah Data</a>
+                <a href="{{ route($routePrefix.'.create') }}" class="btn btn-primary btn-sm mb-2">Tambah Data</a>
 
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -37,13 +37,14 @@
                                 <td>
 
                                     {!! Form::open([
-                                    'route' => ['user.destroy', $item->id],
+                                    'route' => [$routePrefix.'.destroy', $item->id],
                                     'method' => 'DELETE',
                                     'onsubmit' => 'return confirm("Apakah yakin akan menghapus data ini.?")'
                                     ]) !!}
 
-                                    <a href="{{ route('user.edit', $item->id) }}" class="btn btn-success btn-sm"><i
-                                            class="fa-regular fa-pen-to-square"></i> &nbsp; Edit</a>
+                                    <a href="{{ route($routePrefix.'.edit', $item->id) }}"
+                                        class="btn btn-success btn-sm"><i class="fa-regular fa-pen-to-square"></i>
+                                        &nbsp; Edit</a>
 
                                     <button type="submit" class="btn btn-danger btn-sm"><i
                                             class="fa-solid fa-trash"></i> &nbsp; Hapus</button>

@@ -6,13 +6,13 @@ use App\Models\User as Model;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class WaliController extends Controller
 {
     private $viewIndex      = 'user_index';
     private $viewCreate     = 'user_form';
     private $viewEdit       = 'user_form';
     private $viewShow       = 'user_show';
-    private $routePrefix    = 'user';
+    private $routePrefix    = 'wali';
 
 
     /**
@@ -24,12 +24,11 @@ class UserController extends Controller
     {
 
         return view('operator.' . $this->viewIndex, [
-            'models' => Model::where('akses', '<>', 'wali')
+            'models' => Model::where('akses',  'wali')
                 ->latest()
                 ->paginate(50),
-            'title' => 'Data User',
+            'title' => 'Data Wali Murid',
             'routePrefix' => $this->routePrefix,
-
         ]);
     }
 
@@ -45,7 +44,7 @@ class UserController extends Controller
             'method'    => 'POST',
             'route'     => $this->routePrefix . '.store',
             'button'    => 'Simpan Data',
-            'title'     => 'Tambah Data User',
+            'title'     => 'Tambah Data Wali Murid',
         ];
 
         return view('operator.' . $this->viewCreate, $data);
@@ -63,17 +62,18 @@ class UserController extends Controller
             'name'      => 'required',
             'email'     => 'required|unique:users',
             'nohp'      => 'required|unique:users',
-            'akses'     => 'required|in:operator,admin',
             'password'  => 'required'
         ]);
 
         $requestData['password'] = bcrypt($requestData['password']);
+        $requestData['akses'] = 'wali';
+
         Model::create($requestData);
 
         flash('Data berhasil ditambahkan');
 
         return back();
-        // return redirect()->route('user.index');
+        // return redirect()->route('/wali');
     }
 
     /**
@@ -100,7 +100,7 @@ class UserController extends Controller
             'method'    => 'PUT',
             'route'     => [$this->routePrefix . '.update', $id],
             'button'    => 'Ubah Data',
-            'title'     => 'Ubah Data User',
+            'title'     => 'Ubah Data Wali Murid',
         ];
 
         return view('operator.' . $this->viewEdit, $data);
@@ -119,7 +119,6 @@ class UserController extends Controller
             'name'      => 'required',
             'email'     => 'required|unique:users,email,' . $id,
             'nohp'      => 'required|unique:users,nohp,' . $id,
-            'akses'     => 'required|in:operator,admin',
             'password'  => 'nullable'
         ]);
 
@@ -135,7 +134,7 @@ class UserController extends Controller
 
         flash('Data berhasil diubah');
 
-        // return redirect()->route('user.index');
+        // return redirect()->route('operator.wali');
         return back();
     }
 

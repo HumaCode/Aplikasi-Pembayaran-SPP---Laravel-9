@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-4">
-            <div class="card-header">Tambah Data User</div>
+            <div class="card-header">{{ $title }}</div>
 
             <div class="card-body">
 
@@ -30,6 +30,7 @@
                     <span class="text-danger">{{ $errors->first('nohp') }}</span>
                 </div>
 
+                @if (\Route::is('user.create'))
                 <div class="form-group mb-3">
                     {!! Form::label('akses', 'Hak Akses', ['class' => 'mb-1 mt-2']) !!}
                     {!! Form::select('akses', [
@@ -39,6 +40,7 @@
                     ], null, ['class' => 'form-control']) !!}
                     <span class="text-danger">{{ $errors->first('nohp') }}</span>
                 </div>
+                @endif
 
                 <div class="form-group mb-3">
                     {!! Form::label('password', 'Password', ['class' => 'mb-1 mt-2']) !!}
