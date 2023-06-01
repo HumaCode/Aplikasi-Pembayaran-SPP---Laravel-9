@@ -42,5 +42,7 @@ Route::prefix('admin')->middleware(['auth', 'auth.admin'])->group(function () {
 
 
 Route::get('logout', function () {
-    Auth::user()->logout();
-});
+    Auth::logout();
+
+    return redirect('login');
+})->name('logout');
