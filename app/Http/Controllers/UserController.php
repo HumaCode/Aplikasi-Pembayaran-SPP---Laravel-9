@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    private $viewIndex      = 'user.index';
+    private $viewCreate     = 'user.form';
+    private $viewEdit       = 'user.form';
+    private $viewShow       = 'user.show';
+    private $routePrefix    = 'user';
+
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +23,7 @@ class UserController extends Controller
     public function index()
     {
 
-        return view('operator.user_index', [
+        return view('operator.' . $this->viewIndex, [
             'models' => Model::where('akses', '<>', 'wali')
                 ->latest()
                 ->paginate(50)
@@ -33,11 +40,11 @@ class UserController extends Controller
         $data = [
             'model'     => new User(),
             'method'    => 'POST',
-            'route'     => 'user.store',
+            'route'     => $this->routePrefix . '.store',
             'button'    => 'Simpan Data'
         ];
 
-        return view('operator.user_form', $data);
+        return view('operator.' . $this->viewCreate, $data);
     }
 
     /**
@@ -87,11 +94,11 @@ class UserController extends Controller
         $data = [
             'model'     => User::findOrFail($id),
             'method'    => 'PUT',
-            'route'     => ['user.update', $id],
+            'route'     => [$this->routePrefix . '.update', $id],
             'button'    => 'Ubah Data'
         ];
 
-        return view('operator.user_form', $data);
+        return view('operator.' . $this->viewEdit, $data);
     }
 
     /**
