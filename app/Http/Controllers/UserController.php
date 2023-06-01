@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    private $viewIndex      = 'user.index';
-    private $viewCreate     = 'user.form';
-    private $viewEdit       = 'user.form';
-    private $viewShow       = 'user.show';
+    private $viewIndex      = 'user_index';
+    private $viewCreate     = 'user_form';
+    private $viewEdit       = 'user_form';
+    private $viewShow       = 'user_show';
     private $routePrefix    = 'user';
 
 
