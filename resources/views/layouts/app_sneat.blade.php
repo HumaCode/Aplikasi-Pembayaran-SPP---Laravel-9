@@ -35,6 +35,8 @@
 
     <link rel="stylesheet" href="{{ asset('assets') }}/vendor/libs/apex-charts/apex-charts.css" />
 
+    {{-- fontawesome --}}
+    <link rel="stylesheet" href="{{ asset('assets') }}/font/css/all.min.css" />
     <!-- Page CSS -->
 
     <!-- Helpers -->

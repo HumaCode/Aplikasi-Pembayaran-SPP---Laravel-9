@@ -42,11 +42,12 @@
                                     'onsubmit' => 'return confirm("Apakah yakin akan menghapus data ini.?")'
                                     ]) !!}
 
-                                    <a href="{{ route('user.edit', $item->id) }}"
-                                        class="btn btn-success btn-sm">Edit</a>
+                                    <a href="{{ route('user.edit', $item->id) }}" class="btn btn-success btn-sm"><i
+                                            class="fa-regular fa-pen-to-square"></i> &nbsp; Edit</a>
 
+                                    <button type="submit" class="btn btn-danger btn-sm"><i
+                                            class="fa-solid fa-trash"></i> &nbsp; Hapus</button>
 
-                                    {!! Form::submit('Hapus', ['class' => 'btn btn-danger btn-sm']) !!}
 
                                     {!! Form::close() !!}
                                 </td>
