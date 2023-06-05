@@ -42,7 +42,8 @@ class SiswaController extends Controller
             'method'    => 'POST',
             'route'     => $this->routePrefix . '.store',
             'button'    => 'Simpan Data',
-            'title'     => 'Tambah Data Wali Murid',
+            'title'     => 'Tambah Data Siswa',
+            'wali'      => User::where('akses', 'wali')->pluck('name', 'id'),
         ];
 
         return view('operator.' . $this->viewCreate, $data);
@@ -98,7 +99,7 @@ class SiswaController extends Controller
             'method'    => 'PUT',
             'route'     => [$this->routePrefix . '.update', $id],
             'button'    => 'Ubah Data',
-            'title'     => 'Ubah Data Wali Murid',
+            'title'     => 'Ubah Data Siswa',
         ];
 
         return view('operator.' . $this->viewEdit, $data);

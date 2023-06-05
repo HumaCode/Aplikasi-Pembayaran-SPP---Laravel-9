@@ -38,7 +38,7 @@
                     'operator' => 'Operator Sekolah',
                     'administrator'=> 'Administrator',
                     ], null, ['class' => 'form-control']) !!}
-                    <span class="text-danger">{{ $errors->first('nohp') }}</span>
+                    <span class="text-danger">{{ $errors->first('akses') }}</span>
                 </div>
                 @endif
 
