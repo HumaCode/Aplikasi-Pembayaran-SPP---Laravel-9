@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Siswa as Model;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SiswaController extends Controller
 {
@@ -105,11 +106,12 @@ class SiswaController extends Controller
     public function edit($id)
     {
         $data = [
-            'model'     => User::findOrFail($id),
+            'model'     => Model::findOrFail($id),
             'method'    => 'PUT',
             'route'     => [$this->routePrefix . '.update', $id],
             'button'    => 'Ubah Data',
             'title'     => 'Ubah Data Siswa',
+            'wali'      => User::where('akses', 'wali')->pluck('name', 'id'),
         ];
 
         return view('operator.' . $this->viewEdit, $data);
@@ -125,18 +127,32 @@ class SiswaController extends Controller
     public function update(Request $request, $id)
     {
         $requestData = $request->validate([
-            'name'      => 'required',
-            'email'     => 'required|unique:users,email,' . $id,
-            'nohp'      => 'required|unique:users,nohp,' . $id,
-            'password'  => 'nullable'
+            'wali_id'   => 'nullable',
+            'nama'      => 'required',
+            'nisn'      => 'required|unique:siswas,nisn,' . $id,
+            'jurusan'   => 'required',
+            'kelas'     => 'required',
+            'angkatan'  => 'required',
+            'foto'      => 'nullable|image|mimes:jpeg,png,jpg|max:5000'
         ]);
 
         $model = Model::findOrFail($id);
-        if ($requestData['password'] == "") {
-            unset($requestData['password']);
-        } else {
-            $requestData['password'] = bcrypt($requestData['password']);
+
+        if ($request->hasFile('foto')) {
+
+            if ($model->foto != null) {
+                // unlink
+                Storage::delete($model->foto);
+            }
+
+            $requestData['foto'] = $request->file('foto')->store('public');
         }
+
+        if ($request->filled('wali_id')) {
+            $requestData['wali_status'] = 'ok';
+        }
+
+        $requestData['user_id'] = auth()->user()->id;
 
         $model->fill($requestData);
         $model->save();
@@ -156,12 +172,11 @@ class SiswaController extends Controller
     public function destroy($id)
     {
         // return auth()->user()->id;
+        $model = Model::findOrFail($id);
 
-        $model = User::findOrFail($id);
-
-        if ($model->id == 1 || $model->id == auth()->user()->id) {
-            flash('Data tidak dapat dihapus')->error();
-            return back();
+        if ($model->foto != null) {
+            // unlink
+            Storage::delete($model->foto);
         }
 
         $model->delete();
