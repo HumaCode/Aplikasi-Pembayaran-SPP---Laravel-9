@@ -58,14 +58,24 @@ class SiswaController extends Controller
     public function store(Request $request)
     {
         $requestData = $request->validate([
-            'name'      => 'required',
-            'email'     => 'required|unique:users',
-            'nohp'      => 'required|unique:users',
-            'password'  => 'required'
+            'wali_id'   => 'nullable',
+            'nama'      => 'required',
+            'nisn'      => 'required|unique:siswas',
+            'jurusan'   => 'required',
+            'kelas'     => 'required',
+            'angkatan'  => 'required',
+            'foto'      => 'nullable|image|mimes:jpeg,png,jpg|max:5000'
         ]);
 
-        $requestData['password'] = bcrypt($requestData['password']);
-        $requestData['akses'] = 'wali';
+        if ($request->hasFile('foto')) {
+            $requestData['foto'] = $request->file('foto')->store('public');
+        }
+
+        if ($request->filled('wali_id')) {
+            $requestData['wali_status'] = 'ok';
+        }
+
+        $requestData['user_id'] = auth()->user()->id;
 
         Model::create($requestData);
 

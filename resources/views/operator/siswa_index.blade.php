@@ -53,10 +53,10 @@
                                     ]) !!}
 
                                     <a href="{{ route($routePrefix.'.edit', $item->id) }}"
-                                        class="btn btn-success btn-sm"><i class="fa-regular fa-pen-to-square"></i>
+                                        class="btn btn-success btn-sm mb-1"><i class="fa-regular fa-pen-to-square"></i>
                                         &nbsp; Edit</a>
 
-                                    <button type="submit" class="btn btn-danger btn-sm"><i
+                                    <button type="submit" class="btn btn-danger btn-sm mb-1"><i
                                             class="fa-solid fa-trash"></i> &nbsp; Hapus</button>
 
 

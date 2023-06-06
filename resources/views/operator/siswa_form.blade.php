@@ -13,9 +13,10 @@
                 {!! Form::model($model, ['route' => $route, 'method' => $method, 'files' => true]) !!}
 
                 <div class="form-group mb-3">
-                    {!! Form::label('wali_id', 'Nama', ['class' => 'mb-1']) !!}
+                    {!! Form::label('wali_id', 'Nama Wali (optional)', ['class' => 'mb-1']) !!}
 
-                    {!! Form::select('wali_id', $wali, null, ['class' => 'form-control select2']) !!}
+                    {!! Form::select('wali_id', $wali, null, ['class' => 'form-control select2', 'placeholder' =>
+                    '--Pilih--']) !!}
                     <span class="text-danger">{{ $errors->first('wali_id') }}</span>
                 </div>
 
