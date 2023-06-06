@@ -11,11 +11,11 @@
             <div class="card-body">
 
                 {!! Form::model($model, ['route' => $route, 'method' => $method, 'files' => true]) !!}
-                
+
                 <div class="form-group mb-3">
                     {!! Form::label('wali_id', 'Nama', ['class' => 'mb-1']) !!}
 
-                    {!! Form::select('wali_id', $wali, null, ['class' => 'form-control']) !!}
+                    {!! Form::select('wali_id', $wali, null, ['class' => 'form-control select2']) !!}
                     <span class="text-danger">{{ $errors->first('wali_id') }}</span>
                 </div>
 

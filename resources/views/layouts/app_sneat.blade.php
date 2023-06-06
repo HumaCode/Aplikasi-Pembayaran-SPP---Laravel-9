@@ -35,6 +35,9 @@
 
     <link rel="stylesheet" href="{{ asset('assets') }}/vendor/libs/apex-charts/apex-charts.css" />
 
+    {{-- select2 --}}
+    <link rel="stylesheet" href="{{ asset('assets') }}/css/select2.min.css" />
+
     {{-- fontawesome --}}
     <link rel="stylesheet" href="{{ asset('assets') }}/font/css/all.min.css" />
     <!-- Page CSS -->
@@ -335,8 +338,17 @@
     <!-- Page JS -->
     <script src="{{ asset('assets') }}/js/dashboards-analytics.js"></script>
 
+    {{-- select2 --}}
+    <script src="{{ asset('assets') }}/js/select2.min.js"></script>
+
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        })
+    </script>
 </body>
 
 </html>
