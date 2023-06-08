@@ -21,11 +21,17 @@ class SiswaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        // pencarian
+        if ($request->filled('q')) {
+            $models = Model::search($request->q)->paginate(50);
+        } else {
+            $models = Model::latest()->paginate(50);
+        }
 
         return view('operator.' . $this->viewIndex, [
-            'models'        => Model::latest()->paginate(50),
+            'models'        => $models,
             'title'         => 'Data Siswa',
             'routePrefix'   => $this->routePrefix,
         ]);
