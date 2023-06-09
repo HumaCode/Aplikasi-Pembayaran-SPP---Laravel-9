@@ -87,7 +87,7 @@ class WaliController extends Controller
     {
         return view('operator.' . $this->viewShow, [
             'siswa' => Siswa::whereNull('wali_id')->pluck('nama', 'id'),
-            'model' => Model::wali()->where('id', $id)->firstOrFail(),
+            'model' => Model::with('siswa')->wali()->where('id', $id)->firstOrFail(),
             'title' => 'Detail Wali Murid',
         ]);
     }
