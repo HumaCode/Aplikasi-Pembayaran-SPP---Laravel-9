@@ -148,6 +148,14 @@
                         </a>
                     </li>
 
+                    <!-- biaya -->
+                    <li class="menu-item {{ \Route::is('biaya.*') ? 'active' : '' }}">
+                        <a href="{{ route('biaya.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-collection"></i>
+                            <div data-i18n="Basic">Daftar Biaya</div>
+                        </a>
+                    </li>
+
                     <!-- logout -->
                     <li class="menu-item">
                         <a href="{{ route('logout') }}" class="menu-link">

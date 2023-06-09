@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BerandaOperatorController;
 use App\Http\Controllers\BerandaWaliController;
+use App\Http\Controllers\BiayaController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaliController;
@@ -43,6 +44,9 @@ Route::prefix('operator')->middleware(['auth', 'auth.operator'])->group(function
 
     // wali siswa
     Route::resource('walisiswa', WaliSiswaController::class);
+
+    // wali biaya
+    Route::resource('biaya', BiayaController::class);
 });
 
 
