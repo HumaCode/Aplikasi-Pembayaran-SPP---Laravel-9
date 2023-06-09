@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 
 class WaliController extends Controller
 {
-    private $viewIndex      = 'user_index';
+    private $viewIndex      = 'wali_index';
     private $viewCreate     = 'user_form';
     private $viewEdit       = 'user_form';
-    private $viewShow       = 'user_show';
+    private $viewShow       = 'wali_show';
     private $routePrefix    = 'wali';
 
 
@@ -24,7 +24,7 @@ class WaliController extends Controller
     {
 
         return view('operator.' . $this->viewIndex, [
-            'models' => Model::where('akses',  'wali')
+            'models' => Model::wali()
                 ->latest()
                 ->paginate(50),
             'title' => 'Data Wali Murid',
@@ -84,7 +84,12 @@ class WaliController extends Controller
      */
     public function show($id)
     {
-        //
+        $model = Model::wali()->where('id', $id)->firstOrFail();
+
+        return view('operator.' . $this->viewShow, [
+            'model' => $model,
+            'title' => 'Detail Wali Murid',
+        ]);
     }
 
     /**

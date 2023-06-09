@@ -42,8 +42,12 @@
                                     'onsubmit' => 'return confirm("Apakah yakin akan menghapus data ini.?")'
                                     ]) !!}
 
+                                    <a href="{{ route($routePrefix.'.show', $item->id) }}"
+                                        class="btn btn-info btn-sm "><i class="fas fa-eye"></i>
+                                        &nbsp; Detail</a>
+
                                     <a href="{{ route($routePrefix.'.edit', $item->id) }}"
-                                        class="btn btn-success btn-sm"><i class="fa-regular fa-pen-to-square"></i>
+                                        class="btn btn-success btn-sm mx-2"><i class="fa-regular fa-pen-to-square"></i>
                                         &nbsp; Edit</a>
 
                                     <button type="submit" class="btn btn-danger btn-sm"><i
