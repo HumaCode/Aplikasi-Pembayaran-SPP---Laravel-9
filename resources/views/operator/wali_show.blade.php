@@ -60,11 +60,12 @@
                     <h4 class="my-3">DATA ANAK</h4>
 
                     <table class="table table-light">
-                        <thead>
+                        <thead class="text-center">
                             <tr>
                                 <th>No</th>
                                 <th>NISN</th>
                                 <th>Nama</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
 
@@ -74,6 +75,19 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nisn }}</td>
                                 <td>{{ $item->nama }}</td>
+                                <td class="text-center">
+                                    {!! Form::open([
+                                    'route' => ['walisiswa.update', $item->id],
+                                    'method' => 'PUT',
+                                    'onsubmit' => 'return confirm("Apakah yakin akan menghapus data ini.?")'
+                                    ]) !!}
+
+                                    <button type="submit" class="btn btn-danger btn-sm"><i
+                                            class="fa-solid fa-trash"></i> &nbsp; Hapus</button>
+
+
+                                    {!! Form::close() !!}
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>

@@ -86,7 +86,13 @@ class WaliSiswaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $siswa = Siswa::findOrFail($id);
+        $siswa->wali_id     = null;
+        $siswa->wali_status = null;
+        $siswa->save();
+
+        flash('Data Berhasil Dihapus')->success();
+        return back();
     }
 
     /**
