@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Siswa;
 use App\Models\User as Model;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -84,10 +85,9 @@ class WaliController extends Controller
      */
     public function show($id)
     {
-        $model = Model::wali()->where('id', $id)->firstOrFail();
-
         return view('operator.' . $this->viewShow, [
-            'model' => $model,
+            'siswa' => Siswa::whereNull('wali_id')->pluck('nama', 'id'),
+            'model' => Model::wali()->where('id', $id)->firstOrFail(),
             'title' => 'Detail Wali Murid',
         ]);
     }
