@@ -56,7 +56,8 @@ class TagihanController extends Controller
             'title'     => 'Tambah Data Tagihan',
             'angkatan'  => $siswa->pluck('angkatan', 'angkatan'),
             'kelas'     => $siswa->pluck('kelas', 'kelas'),
-            'biaya'     => Biaya::get()->pluck('nama_biaya_full', 'id'),
+            // 'biaya'     => Biaya::get()->pluck('nama_biaya_full', 'id'),
+            'biaya'     => Biaya::get(),
         ];
 
         return view('operator.' . $this->viewCreate, $data);

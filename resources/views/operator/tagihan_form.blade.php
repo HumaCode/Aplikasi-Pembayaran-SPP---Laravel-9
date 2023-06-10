@@ -10,10 +10,29 @@
 
                 {!! Form::model($model, ['route' => $route, 'method' => $method]) !!}
 
-                <div class="form-group mb-3">
+                {{-- <div class="form-group mb-3">
                     {!! Form::label('biaya_id', 'Biaya Tagihan', ['class' => 'mb-1']) !!}
                     {!! Form::select('biaya_id', $biaya, null, ['class' => 'form-control', 'multiple' => true]) !!}
                     <span class="text-danger">{{ $errors->first('biaya_id') }}</span>
+                </div> --}}
+
+                <div class="mb-3">
+                    {{-- @dd($biaya); --}}
+
+                    @foreach ($biaya as $item)
+
+                    <div class="form-check mb-2">
+
+                        {!! Form::checkbox('biaya_id[]', $item->id, null, [
+                        'class' => 'form-check-input',
+                        'id' => 'defaultCheck' . $loop->iteration ,
+                        ]) !!}
+
+                        <label class="form-check-label" for="defaultCheck{{ $loop->iteration }}"> {{
+                            $item->nama_biaya_full }} </label>
+                    </div>
+
+                    @endforeach
                 </div>
 
                 <div class="row">
