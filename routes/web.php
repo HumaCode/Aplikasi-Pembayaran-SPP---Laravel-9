@@ -4,6 +4,7 @@ use App\Http\Controllers\BerandaOperatorController;
 use App\Http\Controllers\BerandaWaliController;
 use App\Http\Controllers\BiayaController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\TagihanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaliController;
 use App\Http\Controllers\WaliSiswaController;
@@ -47,6 +48,9 @@ Route::prefix('operator')->middleware(['auth', 'auth.operator'])->group(function
 
     // wali biaya
     Route::resource('biaya', BiayaController::class);
+
+    // tagihan
+    Route::resource('tagihan', TagihanController::class);
 });
 
 
