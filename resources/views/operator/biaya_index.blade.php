@@ -38,7 +38,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama }}</td>
-                                <td>{{ format_rupiah($item->jumlah) }}</td>
+                                <td>{{ $item->format_rupiah('jumlah') }}</td>
                                 <td>{{ $item->user->name }}</td>
                                 <td width="250" class="text-center">
 
