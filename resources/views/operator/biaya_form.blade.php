@@ -20,7 +20,8 @@
 
                 <div class="form-group mb-3">
                     {!! Form::label('jumlah', 'Jumlah / Nominal', ['class' => 'mb-1 mt-2']) !!}
-                    {!! Form::number('jumlah', null, ['class' => 'form-control', 'id' => 'jumlah', 'min' => 0]) !!}
+                    {!! Form::text('jumlah', null, ['class' => 'form-control rupiah', 'id' => 'jumlah'])
+                    !!}
                     <span class="text-danger">{{ $errors->first('jumlah') }}</span>
                 </div>
 
