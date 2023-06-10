@@ -10,6 +10,12 @@
 
                 {!! Form::model($model, ['route' => $route, 'method' => $method]) !!}
 
+                <div class="form-group mb-3">
+                    {!! Form::label('biaya_id', 'Biaya Tagihan', ['class' => 'mb-1']) !!}
+                    {!! Form::select('biaya_id', $biaya, null, ['class' => 'form-control', 'multiple' => true]) !!}
+                    <span class="text-danger">{{ $errors->first('biaya_id') }}</span>
+                </div>
+
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-3">
