@@ -14,6 +14,7 @@ class Tagihan extends Model
 
     protected $guarded = [];
     protected $dates = ['tanggal_tagihan', 'tanggal_jatuh_tempo'];
+    protected $with = ['user', 'siswa', 'tagihanDetail'];
 
 
 

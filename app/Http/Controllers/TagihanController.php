@@ -28,13 +28,13 @@ class TagihanController extends Controller
     {
         // pencarian
         if ($request->filled('bulan') && $request->filled('tahun')) {
-            $models = Model::with('user', 'siswa', 'tagihanDetail')->latest()
+            $models = Model::latest()
                 ->whereMonth('tanggal_tagihan', $request->bulan)
                 ->whereYear('tanggal_tagihan', $request->tahun)
                 ->paginate(50);
         } else {
 
-            $models = Model::with('user', 'siswa', 'tagihanDetail')->latest()->paginate(50);
+            $models = Model::latest()->paginate(50);
         }
 
 
@@ -132,7 +132,7 @@ class TagihanController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $tagihan = Model::with('siswa', 'tagihanDetail')->findOrFail($id);
+        $tagihan = Model::findOrFail($id);
 
         $data = [
             'tagihan'   => $tagihan,
