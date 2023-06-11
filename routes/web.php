@@ -3,6 +3,7 @@
 use App\Http\Controllers\BerandaOperatorController;
 use App\Http\Controllers\BerandaWaliController;
 use App\Http\Controllers\BiayaController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TagihanController;
 use App\Http\Controllers\UserController;
@@ -51,6 +52,9 @@ Route::prefix('operator')->middleware(['auth', 'auth.operator'])->group(function
 
     // tagihan
     Route::resource('tagihan', TagihanController::class);
+
+    // pembayaran
+    Route::resource('pembayaran', PembayaranController::class);
 });
 
 

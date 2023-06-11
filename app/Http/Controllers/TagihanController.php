@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTagihanRequest;
 use App\Http\Requests\UpdateTagihanRequest;
 use App\Models\Biaya;
+use App\Models\Pembayaran;
 use App\Models\Siswa;
 use App\Models\Tagihan as Model;
 use App\Models\TagihanDetail;
@@ -138,6 +139,7 @@ class TagihanController extends Controller
             'tagihan'   => $tagihan,
             'siswa'     => $tagihan->siswa,
             'periode'   => Carbon::parse($tagihan->tanggal_tagihan)->translatedFormat('F Y'),
+            'model'     => new Pembayaran(),
         ];
 
         return view('operator.' . $this->viewShow, $data);
