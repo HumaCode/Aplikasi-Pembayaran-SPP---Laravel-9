@@ -160,7 +160,13 @@ class TagihanController extends Controller
             ->whereYear('tanggal_tagihan', $request->tahun)
             ->get();
 
-        dd($tagihan);
+        $data = [
+            'tagihan'   => $tagihan,
+            'siswa'     => $tagihan->first()->siswa,
+            'periode'   => Carbon::parse($tagihan->first()->tanggal_tagihan)->translatedFormat('F Y'),
+        ];
+
+        return view('operator.' . $this->viewShow, $data);
     }
 
     /**
