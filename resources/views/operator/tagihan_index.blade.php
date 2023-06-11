@@ -67,13 +67,14 @@
                                     'onsubmit' => 'return confirm("Apakah yakin akan menghapus data ini.?")',
                                     ]) !!}
 
-                                    {{-- <a href="{{ route($routePrefix . '.show', $item->id) }}"
-                                        class="btn btn-info btn-sm mb-1"><i class="fa-regular fa-eye"></i>
-                                        &nbsp; Detail</a> --}}
+                                    <a href="{{ route($routePrefix . '.show', [
+                                        $item->siswa_id,
+                                        'siswa_id'  => $item->siswa_id,
+                                        'bulan'     => $item->tanggal_tagihan->format('m'),
+                                        'tahun'     => $item->tanggal_tagihan->format('Y'),
+                                    ]) }}" class="btn btn-info btn-sm mx-3 mb-1"><i class="fa-regular fa-eye"></i>
+                                        &nbsp; Detail</a>
 
-                                    <a href="{{ route($routePrefix . '.edit', $item->id) }}"
-                                        class="btn btn-success btn-sm mb-1"><i class="fa-regular fa-pen-to-square"></i>
-                                        &nbsp; Edit</a>
 
                                     <button type="submit" class="btn btn-danger btn-sm mb-1"><i
                                             class="fa-solid fa-trash"></i> &nbsp; Hapus</button>
