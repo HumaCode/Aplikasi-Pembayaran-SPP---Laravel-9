@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateTagihanRequest;
 use App\Models\Biaya;
 use App\Models\Siswa;
 use App\Models\Tagihan as Model;
+use App\Models\TagihanDetail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -77,13 +78,8 @@ class TagihanController extends Controller
      */
     public function store(StoreTagihanRequest $request)
     {
-        // 1. lakukan validasi
         $requestData = $request->validated();
-
-        // 2. ambil data biaya yang ditagihkan
         $biayaIdArray = $requestData['biaya_id'];
-
-        // 3. ambil data siswa yang ditagih berdasarkan kelas / angkatan
         $siswa = Siswa::query();
         if ($requestData['kelas'] != '') {
             $siswa->where('kelas', $requestData['kelas']);
@@ -93,57 +89,38 @@ class TagihanController extends Controller
         }
         $siswa = $siswa->get();
 
-        // 4. lakukakan perulangan berdasarkan data siswa
-        foreach ($siswa as $item) {
-            $itemSiswa = $item;
+        foreach ($siswa as $itemSiswa) {
             $biaya = Biaya::whereIn('id', $biayaIdArray)->get();
 
-            // 5. didalam perulangan, simpan tagihan berdasarkan biaya dan siswa
 
-            foreach ($biaya as $itemBiaya) {
-                $dataTagihan = [
-                    'siswa_id'              => $itemSiswa->id,
-                    'angkatan'              => $requestData['angkatan'],
-                    'kelas'                 => $requestData['kelas'],
-                    'tanggal_tagihan'       => $requestData['tanggal_tagihan'],
-                    'tanggal_jatuh_tempo'   => $requestData['tanggal_jatuh_tempo'],
-                    'nama_biaya'            => $itemBiaya->nama,
-                    'jumlah_biaya'          => $itemBiaya->jumlah,
-                    'keterangan'            => $requestData['keterangan'],
-                    'status'                => 'baru',
-                ];
-                // ubah format tgl ke bentuk karbon
-                $tanggalJatuhTempo  = Carbon::parse($requestData['tanggal_jatuh_tempo']);
-                $tanggalTagihan     = Carbon::parse($requestData['tanggal_tagihan']);
+            unset($requestData['biaya_id']);
+            $requestData['siswa_id']    = $itemSiswa->id;
+            $requestData['status']      = 'baru';
+            $tanggalTagihan             = Carbon::parse($requestData['tanggal_tagihan']);
+            $bulanTagihan               = $tanggalTagihan->format('m');
+            $tahunTagihan               = $tanggalTagihan->format('Y');
 
-                // mengambil bulan tagihan berdasakan tgl tagihan & jatuh tempo
-                $bulanTagihan = $tanggalTagihan->format('m');
-                $tahunTagihan = $tanggalTagihan->format('Y');
+            $cekTagihan = Model::where('siswa_id', $itemSiswa->id)
+                ->whereMonth('tanggal_tagihan', $bulanTagihan)
+                ->whereYear('tanggal_tagihan', $tahunTagihan)
+                ->first();
 
+            if ($cekTagihan == null) {
+                // simpan data
+                $tagihan = Model::create($requestData);
 
-                $cekTagihan = Model::where('siswa_id', $itemSiswa->id)
-                    ->where('nama_biaya', $itemBiaya->nama)
-                    ->whereMonth('tanggal_tagihan', $bulanTagihan)
-                    ->whereYear('tanggal_tagihan', $tahunTagihan)
-                    ->first();
+                foreach ($biaya as $itemBiaya) {
 
-                // dd($cekTagihan);
-
-
-                if ($cekTagihan == null) {
-                    // simpan data
-                    Model::create($dataTagihan);
+                    $detail = TagihanDetail::create([
+                        'tagihan_id'    => $tagihan->id,
+                        'nama_biaya'    => $itemBiaya->nama,
+                        'jumlah_biaya'  => $itemBiaya->jumlah,
+                    ]);
                 }
             }
         }
 
-        // 6. simpan notifikasi database untuk tagihan
-        // 7. kirim pesan WA
-        // 8. redirect back()
-
-
         flash('Data tagihan berhasil disimpan')->success();
-
         return back();
     }
 
