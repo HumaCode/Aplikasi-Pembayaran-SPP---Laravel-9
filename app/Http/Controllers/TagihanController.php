@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateTagihanRequest;
 use App\Models\Biaya;
 use App\Models\Siswa;
 use App\Models\Tagihan as Model;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TagihanController extends Controller
@@ -92,6 +93,8 @@ class TagihanController extends Controller
             $itemSiswa = $item;
             $biaya = Biaya::whereIn('id', $biayaIdArray)->get();
 
+            // 5. didalam perulangan, simpan tagihan berdasarkan biaya dan siswa
+
             foreach ($biaya as $itemBiaya) {
                 $dataTagihan = [
                     'siswa_id'              => $itemSiswa->id,
@@ -104,15 +107,39 @@ class TagihanController extends Controller
                     'keterangan'            => $requestData['keterangan'],
                     'status'                => 'baru',
                 ];
-                print_r($dataTagihan);
-                echo '<br>';
+                // ubah format tgl ke bentuk karbon
+                $tanggalJatuhTempo  = Carbon::parse($requestData['tanggal_jatuh_tempo']);
+                $tanggalTagihan     = Carbon::parse($requestData['tanggal_tagihan']);
+
+                // mengambil bulan tagihan berdasakan tgl tagihan & jatuh tempo
+                $bulanTagihan = $tanggalTagihan->format('m');
+                $tahunTagihan = $tanggalTagihan->format('Y');
+
+
+                $cekTagihan = Model::where('siswa_id', $itemSiswa->id)
+                    ->where('nama_biaya', $itemBiaya->nama)
+                    ->whereMonth('tanggal_tagihan', $bulanTagihan)
+                    ->whereYear('tanggal_tagihan', $tahunTagihan)
+                    ->first();
+
+                // dd($cekTagihan);
+
+
+                if ($cekTagihan == null) {
+                    // simpan data
+                    Model::create($dataTagihan);
+                }
             }
         }
 
-        // 5. didalam perulangan, simpan tagihan berdasarkan biaya dan siswa
         // 6. simpan notifikasi database untuk tagihan
         // 7. kirim pesan WA
         // 8. redirect back()
+
+
+        flash('Data tagihan berhasil disimpan')->success();
+
+        return back();
     }
 
     /**
