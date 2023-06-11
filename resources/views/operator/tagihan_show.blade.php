@@ -10,7 +10,8 @@
                 <table class="table table-sm">
                     <tr>
                         <td rowspan="8" width="200">
-                            <img src="{{ \Storage::url($siswa->foto) }}" width="200" alt="{{ $siswa->nama }}">
+                            <img src="{{ \Storage::url($siswa->foto ?? 'images/noimg.png') }}" width="200"
+                                alt="{{ $siswa->nama }}">
                         </td>
                     </tr>
                     <tr>
