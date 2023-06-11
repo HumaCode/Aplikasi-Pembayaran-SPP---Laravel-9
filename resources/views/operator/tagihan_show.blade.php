@@ -55,7 +55,15 @@
                         </tr>
                         @endforeach
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2"><strong>Total Pembayaran</strong></td>
+                            <td><strong>{{ format_rupiah($tagihan->tagihanDetail->sum('jumlah_biaya')) }}</strong></td>
+                        </tr>
+                    </tfoot>
                 </table>
+
+                <h5 class="mt-3">Status Pembayaran : <strong>{{ strtoupper($tagihan->status) }}</strong></h5>
             </div>
 
             <hr class="mx-3 mb-0">
@@ -69,18 +77,20 @@
                 'method' => 'POST',
                 ]) !!}
 
+                {!! Form::hidden('tagihan_id', $tagihan->id, []) !!}
+
                 <div class="form-group mb-3">
-                    <label for="tanggal_pembayaran" class="mb-1">Tanggal Pembayaran</label>
-                    {!! Form::date('tanggal_pembayaran', $model->tanggal_bayar ?? \Carbon\Carbon::now(), ['class' =>
+                    <label for="tanggal_bayar" class="mb-1">Tanggal Pembayaran</label>
+                    {!! Form::date('tanggal_bayar', $model->tanggal_bayar ?? \Carbon\Carbon::now(), ['class' =>
                     'form-control']) !!}
-                    <span class="text-danger">{{ $errors->first('tanggal_pembayaran') }}</span>
+                    <span class="text-danger">{{ $errors->first('tanggal_bayar') }}</span>
                 </div>
 
                 <div class="form-group mb-3">
-                    <label for="jumlah_bayar" class="mb-1">Jumlah Bayar</label>
-                    {!! Form::text('jumlah_bayar', null, ['class' =>
+                    <label for="jumlah_dibayar" class="mb-1">Jumlah Bayar</label>
+                    {!! Form::text('jumlah_dibayar', null, ['class' =>
                     'form-control rupiah']) !!}
-                    <span class="text-danger">{{ $errors->first('jumlah_bayar') }}</span>
+                    <span class="text-danger">{{ $errors->first('jumlah_dibayar') }}</span>
                 </div>
 
                 <div class="form-group mb-2">

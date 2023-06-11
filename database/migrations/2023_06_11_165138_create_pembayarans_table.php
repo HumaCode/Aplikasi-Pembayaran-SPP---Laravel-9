@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('wali_id')->index();
             $table->dateTime('tanggal_bayar');
             $table->string('status_konfirmasi')->nullable();
-            $table->double('jumlah_bayar');
+            $table->double('jumlah_dibayar');
             $table->string('bukti_bayar')->nullable();
             $table->string('metode_pembayaran');
             $table->foreignId('user_id')->nullable()->index();
