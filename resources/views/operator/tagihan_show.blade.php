@@ -34,10 +34,10 @@
 <div class="row mt-2">
     <div class="col-md-5">
         <div class="card">
-            <div class="card-header">DATA TAGIHAN {{ strtoupper($periode) }}</div>
+            <div class="card-header py-2">DATA TAGIHAN {{ strtoupper($periode) }}</div>
             <div class="card-body">
 
-                <table class="table table-sm table-bordered my-2">
+                <table class="table table-sm table-bordered mb-2">
                     <thead>
                         <tr>
                             <td>No</td>
@@ -61,6 +61,31 @@
                             <td><strong>{{ format_rupiah($tagihan->tagihanDetail->sum('jumlah_biaya')) }}</strong></td>
                         </tr>
                     </tfoot>
+                </table>
+
+                <h5 class="card-header pb-1 px-0">DATA PEMBAYARAN</h5>
+                <table class="table table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>TANGGAL</th>
+                            <th>JUMLAH</th>
+                            <th>METODE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($tagihan->pembayaran as $item)
+                        <tr>
+                            <td>
+                                <a href="#" target="_blank"><i class="fas fa-print"></i></a>
+                            </td>
+                            <td>{{ $item->tanggal_bayar->translatedFormat('d/m/Y') }}</td>
+                            <td>{{ format_rupiah($item->jumlah_dibayar) }}</td>
+                            <td>{{ $item->metode_pembayaran }}</td>
+
+                        </tr>
+                        @endforeach
+                    </tbody>
                 </table>
 
                 <h5 class="mt-3">Status Pembayaran : <strong>{{ strtoupper($tagihan->status) }}</strong></h5>

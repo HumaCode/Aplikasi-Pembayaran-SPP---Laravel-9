@@ -133,7 +133,7 @@ class TagihanController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $tagihan = Model::findOrFail($id);
+        $tagihan = Model::with('pembayaran')->findOrFail($id);
 
         $data = [
             'tagihan'   => $tagihan,
