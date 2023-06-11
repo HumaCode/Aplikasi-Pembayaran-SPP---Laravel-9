@@ -25,6 +25,10 @@
                         <td>{{ $siswa->nama }}</td>
                     </tr>
                 </table>
+
+                <a href="#" class="btn btn-primary btn-sm" target="_blank"><i class="fas fa-file "></i> &nbsp;Kartu
+                    Tagihan {{
+                    request('tahun') }}</a>
             </div>
         </div>
     </div>
@@ -63,7 +67,14 @@
                     </tfoot>
                 </table>
 
-                <h5 class="card-header pb-1 px-0">DATA PEMBAYARAN</h5>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="card">
+            <h5 class="card-header pb-1 pb-0 pt-3"><strong>DATA PEMBAYARAN</strong></h5>
+            <div class="card-body">
                 <table class="table table-striped table-sm">
                     <thead>
                         <tr>
@@ -90,11 +101,9 @@
                 </table>
 
                 <h5 class="mt-3">Status Pembayaran : <strong>{{ strtoupper($tagihan->status) }}</strong></h5>
+
             </div>
-
-            <hr class="mx-3 mb-0">
-
-            <div class="card-header mt-0">DATA PEMBAYARAN</div>
+            <div class="card-header py-1"><strong>FORM PEMBAYARAN</strong></div>
 
             <div class="card-body">
 
@@ -124,15 +133,6 @@
                 </div>
 
                 {!! Form::close() !!}
-            </div>
-
-        </div>
-    </div>
-    <div class="col-md-7">
-        <div class="card">
-            <div class="card-header">KARTU SPP</div>
-            <div class="card-body">
-                Kartu SPP
             </div>
         </div>
     </div>
