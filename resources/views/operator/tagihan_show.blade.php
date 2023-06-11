@@ -34,10 +34,32 @@
 <div class="row mt-2">
     <div class="col-md-5">
         <div class="card">
-            <div class="card-header">DATA TAGIHAN</div>
+            <div class="card-header">DATA TAGIHAN {{ strtoupper($periode) }}</div>
             <div class="card-body">
-                Data Tagihan
+
+                <table class="table table-sm table-bordered my-2">
+                    <thead>
+                        <tr>
+                            <td>No</td>
+                            <td>Nama Tagihan</td>
+                            <td>Jumlah Tagihan</td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach ($tagihan->tagihanDetail as $item)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->nama_biaya }}</td>
+                            <td>{{ format_rupiah($item->jumlah_biaya) }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
+
+            <div class="card-header">DATA PEMBAYARAN</div>
+
         </div>
     </div>
     <div class="col-md-7">

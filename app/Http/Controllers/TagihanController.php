@@ -28,7 +28,7 @@ class TagihanController extends Controller
     {
         // pencarian
         if ($request->filled('bulan') && $request->filled('tahun')) {
-            $models = Model::latest()
+            $models = Model::with('user', 'siswa', 'tagihanDetail')->latest()
                 ->whereMonth('tanggal_tagihan', $request->bulan)
                 ->whereYear('tanggal_tagihan', $request->tahun)
                 ->paginate(50);
