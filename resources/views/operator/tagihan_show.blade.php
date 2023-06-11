@@ -77,7 +77,8 @@
                         @foreach ($tagihan->pembayaran as $item)
                         <tr>
                             <td>
-                                <a href="#" target="_blank"><i class="fas fa-print"></i></a>
+                                <a href="{{ route('kwitansipembayaran.show', $item->id) }}" target="_blank"><i
+                                        class="fas fa-print"></i></a>
                             </td>
                             <td>{{ $item->tanggal_bayar->translatedFormat('d/m/Y') }}</td>
                             <td>{{ format_rupiah($item->jumlah_dibayar) }}</td>
