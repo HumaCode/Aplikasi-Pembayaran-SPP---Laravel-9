@@ -16,6 +16,7 @@
                     <span class="text-danger">{{ $errors->first('biaya_id') }}</span>
                 </div> --}}
 
+                <label class="mb-1">Tagihan Untuk</label>
                 <div class="mb-3">
                     {{-- @dd($biaya); --}}
 
