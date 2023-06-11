@@ -46,6 +46,7 @@
                                 <td>Nama</td>
                                 <td>Tanggal Tagihan</td>
                                 <td>Status</td>
+                                <td>Total Tagihan</td>
                                 <td>Aksi</td>
                             </tr>
                         </thead>
@@ -59,6 +60,7 @@
                                 <td>{{ $item->siswa->nama }}</td>
                                 <td>{{ $item->tanggal_tagihan->format('d-M-Y') }}</td>
                                 <td>{{ $item->status }}</td>
+                                <td>{{ $item->tagihanDetail->sum('jumlah_biaya') }}</td>
                                 <td width="250" class="text-center">
 
                                     {!! Form::open([
