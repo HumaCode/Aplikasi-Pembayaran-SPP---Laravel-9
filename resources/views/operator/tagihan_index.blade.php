@@ -8,26 +8,44 @@
 
             <div class="card-body">
 
-                <a href="{{ route($routePrefix . '.create') }}" class="btn btn-primary btn-sm mb-2">Tambah Data</a>
+                <div class="row">
 
-                {!! Form::open(['route' => $routePrefix.'.index', 'method' => 'GET']) !!}
+                    <div class="col-md-6">
 
-                <div class="input-group mb-2">
-                    <input type="text" class="form-control" name="q" placeholder="Cari Data Tagihan"
-                        value="{{ request('q') }}" />
-                    <button class="btn btn-outline-primary" type="submit"><i class="bx bx-search"></i></button>
+                        <a href="{{ route($routePrefix . '.create') }}" class="btn btn-primary btn-sm mb-2">Tambah
+                            Data</a>
+                    </div>
+                    <div class="col-md-6">
+                        {!! Form::open(['route' => $routePrefix.'.index', 'method' => 'GET']) !!}
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                {!! Form::selectMonth('bulan', request('bulan'), ['class' => 'form-control mb-1']) !!}
+                            </div>
+                            <div class="col-md-4">
+                                {!! Form::selectRange('tahun', 2023, date('Y') +1, request('tahun'), ['class' =>
+                                'form-control mb-1']) !!}
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary">Tampilkan</button>
+                            </div>
+                        </div>
+
+                        {!! Form::close() !!}
+                    </div>
                 </div>
 
-                {!! Form::close() !!}
+
 
                 <div class="table-responsive">
                     <table class="table table-striped">
                         <thead class="text-center">
                             <tr>
                                 <td>No</td>
-                                <td>Biaya</td>
-                                <td>Jumlah</td>
-                                <td>Created</td>
+                                <td>NISN</td>
+                                <td>Nama</td>
+                                <td>Tanggal Tagihan</td>
+                                <td>Status</td>
                                 <td>Aksi</td>
                             </tr>
                         </thead>
@@ -37,9 +55,10 @@
                             @forelse ($models as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->nama }}</td>
-                                <td>{{ $item->format_rupiah('jumlah') }}</td>
-                                <td>{{ $item->user->name }}</td>
+                                <td>{{ $item->siswa->nisn }}</td>
+                                <td>{{ $item->siswa->nama }}</td>
+                                <td>{{ $item->tanggal_tagihan }}</td>
+                                <td>{{ $item->status }}</td>
                                 <td width="250" class="text-center">
 
                                     {!! Form::open([
