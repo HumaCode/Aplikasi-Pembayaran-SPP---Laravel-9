@@ -73,9 +73,12 @@ Route::get('/login-wali', [LoginController::class, 'showLoginFormWali'])->name('
 Route::get('/register-wali', [RegisterController::class, 'showRegistrationForm'])->name('register.wali');
 
 
-Route::prefix('wali')->middleware(['auth', 'auth.wali'])->group(function () {
+Route::prefix('wali')->middleware(['auth', 'auth.wali'])->name('wali.')->group(function () {
     //ini route khusus untuk wali-murid
-    Route::get('beranda', [BerandaWaliController::class, 'index'])->name('wali.beranda');
+    Route::get('beranda', [BerandaWaliController::class, 'index'])->name('beranda');
+
+    // siswa
+    Route::resource('pembayaran', PembayaranController::class);
 });
 
 
