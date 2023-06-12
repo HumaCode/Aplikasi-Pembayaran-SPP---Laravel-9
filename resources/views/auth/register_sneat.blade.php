@@ -6,7 +6,7 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>Halaman Login Operator | {{ config('app.name') }}</title>
+  <title>Halaman Register Wali Murid | {{ config('app.name') }}</title>
 
   <meta name="description" content="" />
 
@@ -58,11 +58,22 @@
               <h4 class=""><strong>{{ strtoupper(config('app.name')) }}</strong></h4>
             </div>
             <!-- /Logo -->
-            <h4 class="mb-2">LOGIN OPERATOR</h4>
-            <p class="mb-4">Silahkan Login Terlebih Dahulu</p>
+            <h4 class="mb-2">REGISTER OPERATOR</h4>
+            <p class="mb-4">Silahkan Lengkapi Form Dibawah Ini</p>
 
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('register') }}">
               @csrf
+
+              <div class="mb-3">
+                <label for="name" class="form-label">Nama</label>
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
+                  placeholder="Masukan name kamu" autofocus value="{{ old('name') }}" />
+                @error('name')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+              </div>
 
               <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
@@ -74,32 +85,35 @@
                 </span>
                 @enderror
               </div>
-              <div class="mb-3 form-password-toggle">
-                @if (Route::has('password.request'))
-                <div class="d-flex justify-content-between">
-                  <label class="form-label" for="password">Password</label>
-                  <a href="{{ route('password.request') }}">
-                    <small>Lupa Password?</small>
-                  </a>
-                </div>
-                @endif
 
+              <div class="mb-3 form-password-toggle">
+                <label for="password" class="form-label">Password</label>
                 <div class="input-group input-group-merge">
-                  <input type="password" id="password" class="form-control" name="password"
+                  <input type="password" id="password" class="form-control @error('password') is-invalid @enderror"
+                    name="password"
                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                     aria-describedby="password" />
                   <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                  @error('password')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                  @enderror
                 </div>
               </div>
-              <div class="mb-3">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="remember" name="remember" {{ old('remember')
-                    ? 'checked' : '' }} />
-                  <label class="form-check-label" for="remember"> Remember Me </label>
+
+              <div class="mb-3 form-password-toggle">
+                <label for="password-confirm" class="form-label">Password Konfirmasi</label>
+                <div class="input-group input-group-merge">
+                  <input type="password" id="password-confirm" class="form-control" name="password_confirmation"
+                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                    aria-describedby="password-confirm" />
+                  <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                 </div>
               </div>
+
               <div class="mb-3">
-                <button class="btn btn-primary d-grid w-100" type="submit">MASUK</button>
+                <button class="btn btn-primary d-grid w-100" type="submit">DAFTAR</button>
               </div>
             </form>
 

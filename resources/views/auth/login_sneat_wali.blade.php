@@ -3,10 +3,9 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>Halaman Login Operator | {{ config('app.name') }}</title>
+  <title>Halaman Login Wali Murid | {{ config('app.name') }}</title>
 
   <meta name="description" content="" />
 
@@ -16,17 +15,14 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
 
   <!-- Icons. Uncomment required icon fonts -->
   <link rel="stylesheet" href="{{ asset('assets') }}/vendor/fonts/boxicons.css" />
 
   <!-- Core CSS -->
   <link rel="stylesheet" href="{{ asset('assets') }}/vendor/css/core.css" class="template-customizer-core-css" />
-  <link rel="stylesheet" href="{{ asset('assets') }}/vendor/css/theme-default.css"
-    class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="{{ asset('assets') }}/vendor/css/theme-default.css" class="template-customizer-theme-css" />
   <link rel="stylesheet" href="{{ asset('assets') }}/css/demo.css" />
 
   <!-- Vendors CSS -->
@@ -58,7 +54,7 @@
               <h4 class=""><strong>{{ strtoupper(config('app.name')) }}</strong></h4>
             </div>
             <!-- /Logo -->
-            <h4 class="mb-2">LOGIN OPERATOR</h4>
+            <h4 class="mb-2">LOGIN WALI MURID</h4>
             <p class="mb-4">Silahkan Login Terlebih Dahulu</p>
 
             <form method="POST" action="{{ route('login') }}">
@@ -66,8 +62,7 @@
 
               <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email"
-                  placeholder="Masukan email kamu" autofocus value="{{ old('email') }}" />
+                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="Masukan email kamu" autofocus value="{{ old('email') }}" />
                 @error('email')
                 <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
@@ -85,9 +80,7 @@
                 @endif
 
                 <div class="input-group input-group-merge">
-                  <input type="password" id="password" class="form-control" name="password"
-                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                    aria-describedby="password" />
+                  <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
                   <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                 </div>
               </div>
@@ -103,6 +96,12 @@
               </div>
             </form>
 
+            <p class="text-center">
+              <span>Belum punya akun?</span>
+              <a href="{{ route('register') }}">
+                <span>Daftar</span>
+              </a>
+            </p>
           </div>
         </div>
         <!-- /Register -->

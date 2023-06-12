@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BerandaOperatorController;
 use App\Http\Controllers\BerandaWaliController;
 use App\Http\Controllers\BiayaController;
@@ -64,6 +66,11 @@ Route::prefix('operator')->middleware(['auth', 'auth.operator'])->group(function
     // kartu spp
     Route::get('kartuspp', [KartuSppController::class, 'index'])->name('kartuspp.index');
 });
+
+// login wali
+Route::get('/login-wali', [LoginController::class, 'showLoginFormWali'])->name('login.wali');
+
+Route::get('/register-wali', [RegisterController::class, 'showRegistrationForm'])->name('register.wali');
 
 
 Route::prefix('wali')->middleware(['auth', 'auth.wali'])->group(function () {
