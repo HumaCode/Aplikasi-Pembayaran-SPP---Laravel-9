@@ -26,7 +26,10 @@
                     </tr>
                 </table>
 
-                <a href="#" class="btn btn-primary btn-sm" target="_blank"><i class="fas fa-file "></i> &nbsp;Kartu
+                <a href="{{ route('kartuspp.index', [
+                    'siswa_id' => $siswa->id,
+                    'tahun' => request('tahun'),
+                ]) }}" class="btn btn-primary btn-sm" target="_blank"><i class="fas fa-file "></i> &nbsp;Kartu
                     Tagihan {{
                     request('tahun') }}</a>
             </div>

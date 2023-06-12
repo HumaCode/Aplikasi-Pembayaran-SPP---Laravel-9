@@ -3,6 +3,7 @@
 use App\Http\Controllers\BerandaOperatorController;
 use App\Http\Controllers\BerandaWaliController;
 use App\Http\Controllers\BiayaController;
+use App\Http\Controllers\KartuSppController;
 use App\Http\Controllers\KwitansiPembayaranController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\SiswaController;
@@ -59,6 +60,9 @@ Route::prefix('operator')->middleware(['auth', 'auth.operator'])->group(function
 
     // print kwitansi
     Route::get('kwitansi-pembayaran/{id}', [KwitansiPembayaranController::class, 'show'])->name('kwitansipembayaran.show');
+
+    // kartu spp
+    Route::get('kartuspp', [KartuSppController::class, 'index'])->name('kartuspp.index');
 });
 
 
