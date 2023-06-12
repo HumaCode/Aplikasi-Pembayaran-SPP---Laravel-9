@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\BankSeklolahController;
 use App\Http\Controllers\BerandaOperatorController;
 use App\Http\Controllers\BerandaWaliController;
 use App\Http\Controllers\BiayaController;
@@ -43,6 +44,9 @@ Route::prefix('operator')->middleware(['auth', 'auth.operator'])->group(function
 
     // user
     Route::resource('user', UserController::class);
+
+    // bank sekolah
+    Route::resource('banksekolah', BankSeklolahController::class);
 
     // wali
     Route::resource('wali', WaliController::class);
