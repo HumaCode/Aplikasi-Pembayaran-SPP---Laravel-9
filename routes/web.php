@@ -13,6 +13,7 @@ use App\Http\Controllers\TagihanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaliController;
 use App\Http\Controllers\WaliMuridSiswaController;
+use App\Http\Controllers\WaliMuridTagihanController;
 use App\Http\Controllers\WaliSiswaController;
 use Illuminate\Support\Facades\Route;
 
@@ -80,6 +81,9 @@ Route::prefix('wali')->middleware(['auth', 'auth.wali'])->name('wali.')->group(f
 
     // siswa
     Route::resource('siswa', WaliMuridSiswaController::class);
+
+    // tagihan
+    Route::resource('tagihan', WaliMuridTagihanController::class);
 });
 
 

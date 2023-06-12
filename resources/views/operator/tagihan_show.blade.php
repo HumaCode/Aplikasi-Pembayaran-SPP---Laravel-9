@@ -39,41 +39,7 @@
 </div>
 
 <div class="row mt-2">
-    <div class="col-md-5">
-        <div class="card">
-            <div class="card-header py-2">DATA TAGIHAN {{ strtoupper($periode) }}</div>
-            <div class="card-body">
 
-                <table class="table table-sm table-bordered mb-2">
-                    <thead>
-                        <tr>
-                            <td>No</td>
-                            <td>Nama Tagihan</td>
-                            <td>Jumlah Tagihan</td>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach ($tagihan->tagihanDetail as $item)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->nama_biaya }}</td>
-                            <td>{{ format_rupiah($item->jumlah_biaya) }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="2"><strong>Total Pembayaran</strong></td>
-                            <td><strong>{{ format_rupiah($tagihan->tagihanDetail->sum('jumlah_biaya')) }}</strong></td>
-                        </tr>
-                    </tfoot>
-                </table>
-
-            </div>
-
-        </div>
-    </div>
     <div class="col-md-7">
         <div class="card">
             <h5 class="card-header pb-1 pb-0 pt-3"><strong>DATA PEMBAYARAN</strong></h5>
@@ -137,6 +103,42 @@
 
                 {!! Form::close() !!}
             </div>
+        </div>
+    </div>
+
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header py-2">DATA TAGIHAN {{ strtoupper($periode) }}</div>
+            <div class="card-body">
+
+                <table class="table table-sm table-bordered mb-2">
+                    <thead>
+                        <tr>
+                            <td>No</td>
+                            <td>Nama Tagihan</td>
+                            <td>Jumlah Tagihan</td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach ($tagihan->tagihanDetail as $item)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->nama_biaya }}</td>
+                            <td>{{ format_rupiah($item->jumlah_biaya) }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2"><strong>Total Pembayaran</strong></td>
+                            <td><strong>{{ format_rupiah($tagihan->tagihanDetail->sum('jumlah_biaya')) }}</strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+
         </div>
     </div>
 </div>
