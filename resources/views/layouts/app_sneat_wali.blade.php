@@ -351,6 +351,9 @@
             $('.select2').select2();
         })
     </script>
+
+    @stack('js')
+
 </body>
 
 </html>

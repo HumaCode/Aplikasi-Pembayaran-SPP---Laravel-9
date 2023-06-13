@@ -12,18 +12,24 @@ class WaliMuridPembayaranController extends Controller
 {
     public function create(Request $request)
     {
+        // return $request->bank_sekolah_id;
+
         $data = [
             'tagihan'       => Tagihan::where('id', $request->tagihan_id)->first(),
-            'bankSekolah'   => BankSekolah::findOrFail($request->bank_sekolah_id),
             'model'         => new Pembayaran(),
             'method'        => 'POST',
             'route'         => 'wali.pembayaran.store',
-            'listBank'      => Bank::pluck('nama_bank', 'id'),
+            'listBank'      => BankSekolah::pluck('nama_bank', 'id'),
         ];
 
         if ($request->bank_sekolah_id != '') {
             $data['bankYangDipilih'] = BankSekolah::findOrFail($request->bank_sekolah_id);
         }
+
+        $data['url'] = route('wali.pembayaran.create', [
+            'tagihan_id'        => $request->tagihan_id,
+        ]);
+
 
         return view('wali.pembayaran_form', $data);
     }

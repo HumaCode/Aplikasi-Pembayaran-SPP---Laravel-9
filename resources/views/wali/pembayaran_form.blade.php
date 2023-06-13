@@ -1,5 +1,6 @@
 @extends('layouts.app_sneat_wali')
 
+
 @section('content')
 <div class="row">
     <div class="col-md-12">
@@ -15,8 +16,8 @@
 
                 <div class="form-group mb-3">
                     <label for="bank_id" class="mb-1">Bank Tujuan</label>
-                    {!! Form::select('bank_id', $listBank, request('bank_Sekolah_id'), ['class' => 'form-control
-                    select2', 'placeholder' => '-- Pilih --']) !!}
+                    {!! Form::select('bank_id', $listBank, request('bank_sekolah_id'), ['class' => 'form-control
+                    select2', 'placeholder' => '-- Pilih --', 'id' => 'pilih_bank']) !!}
                     <span class="text-danger">{{ $errors->first('bank_id') }}</span>
                 </div>
 
@@ -73,4 +74,28 @@
     </div>
 
 </div>
+
+
 @endsection
+
+@push('js')
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+    crossorigin="anonymous"></script>
+
+
+
+
+<script>
+    $(document).ready(function() {
+        $('#pilih_bank').change(function() {
+            // e.preventDevault();
+        
+            var bankId = $(this).find(":selected").val();
+            window.location.href = "{!! $url !!}&bank_sekolah_id=" + bankId;
+
+            // alert(bankId);
+
+        })
+    })
+</script>
+@endpush
