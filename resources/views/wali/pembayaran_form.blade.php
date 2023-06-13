@@ -16,9 +16,32 @@
                 <div class="form-group mb-3">
                     <label for="bank_id" class="mb-1">Bank Tujuan</label>
                     {!! Form::select('bank_id', $listBank, request('bank_Sekolah_id'), ['class' => 'form-control
-                    select2']) !!}
+                    select2', 'placeholder' => '-- Pilih --']) !!}
                     <span class="text-danger">{{ $errors->first('bank_id') }}</span>
                 </div>
+
+                @if (request('bank_sekolah_id') != '')
+                <div class="alert alert-primary mt-2 mb-2" role="alert">
+                    <table>
+
+                        <tr>
+                            <td width="100">Nama Bank</td>
+                            <td>: &nbsp;</td>
+                            <td>{{ $bankYangDipilih->nama_bank }}</td>
+                        </tr>
+                        <tr>
+                            <td>No. Rekening</td>
+                            <td>: &nbsp;</td>
+                            <td>{{ $bankYangDipilih->nomor_rekening }}</td>
+                        </tr>
+                        <tr>
+                            <td>Atas Nama</td>
+                            <td>: &nbsp;</td>
+                            <td>{{ $bankYangDipilih->nama_rekening }}</td>
+                        </tr>
+                    </table>
+                </div>
+                @endif
 
                 <div class="form-group mb-3">
                     <label for="tanggal_bayar" class="mb-1">Tanggal Bayar</label>
