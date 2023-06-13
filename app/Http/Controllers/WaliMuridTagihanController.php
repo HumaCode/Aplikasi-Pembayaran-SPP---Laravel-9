@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BankSekolah;
 use App\Models\Tagihan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,5 +18,18 @@ class WaliMuridTagihanController extends Controller
         ];
 
         return view('wali.tagihan_index', $data);
+    }
+
+    public function show($id)
+    {
+        $tagihan = Tagihan::find($id);
+
+        $data = [
+            'tagihan'       => $tagihan,
+            'siswa'         => $tagihan->siswa,
+            'banksekolah'   => BankSekolah::all(),
+        ];
+
+        return view('wali.tagihan_show', $data);
     }
 }
