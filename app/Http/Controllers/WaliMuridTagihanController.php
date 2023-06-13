@@ -11,7 +11,7 @@ class WaliMuridTagihanController extends Controller
 {
     public function index()
     {
-        $siswaId = Auth::user()->siswa->pluck('id');
+        $siswaId = Auth::user()->getAllSiswaId();
 
         $data = [
             'tagihan' => Tagihan::whereIn('siswa_id', $siswaId)->get(),
@@ -22,7 +22,8 @@ class WaliMuridTagihanController extends Controller
 
     public function show($id)
     {
-        $tagihan = Tagihan::find($id);
+        $siswaId = Auth::user()->getAllSiswaId();
+        $tagihan = Tagihan::whereIn('siswa_id', $siswaId)->findOrFail($id);
 
         $data = [
             'tagihan'       => $tagihan,
