@@ -35,7 +35,11 @@
                                 <td>{{ $item->tanggal_tagihan }}</td>
                                 <td><strong>{{ $item->getStatusTagihanWali() }}</strong></td>
                                 <td width="250" class="text-center">
-
+                                    @if ($item->status == 'baru' || $item->status == 'angsur')
+                                    <a href="" class="btn btn-primary">Lakukan Pembayaran</a>
+                                    @else
+                                    <a href="" class="btn btn-success">Pembayaran Sudah Lunas</a>
+                                    @endif
                                 </td>
 
                             </tr>
