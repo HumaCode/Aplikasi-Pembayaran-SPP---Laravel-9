@@ -115,16 +115,20 @@
                         Tranfer Ke Rekening selain dari
                         Rekening dibawah ini.</p>
 
+                    <div>Silahkan lihat tatacara melakukan pembayaran melalui <a href=""
+                            class="text-primary"><strong>ATM</strong></a> atau <a href="#"
+                            class="text-primary"><strong>Internet Bangking</strong></a></div>
                     <p>Setelah melakukan pembayaran, silahkan upload bukti pembayaran melalui tombol konfirmasi yang ada
                         dibawah ini. </p>
                 </div>
 
                 <ul>
                     <li>
-                        <a href="">Cara Melakukan Pembayaran dengan Tranfer melalui ATM</a>
+                        <a href="" class="text-dark">Cara Melakukan Pembayaran dengan Tranfer melalui ATM</a>
                     </li>
                     <li>
-                        <a href="">Cara Melakukan Pembayaran dengan Tranfer melalui Internet Banking</a>
+                        <a href="" class="text-dark">Cara Melakukan Pembayaran dengan Tranfer melalui Internet
+                            Banking</a>
                     </li>
                 </ul>
 
@@ -133,7 +137,7 @@
                 <div class="row">
                     @foreach ($banksekolah as $itemBank)
                     <div class="col-md-6">
-                        <div class="alert alert-info" role="alert">
+                        <div class="alert alert-primary" role="alert">
                             <table>
 
                                 <tr>
@@ -153,7 +157,10 @@
                                 </tr>
                             </table>
                             <div class="text-end">
-                                <button class="btn btn-primary btn-sm mt-3 ">Konfirmasi Pembayaran</button>
+                                <a href="{{ route('wali.pembayaran.create', [
+                                    'tagihan_id' => $tagihan->id,
+                                    'bank_sekolah_id' => $itemBank->id,
+                                ]) }}" class="btn btn-primary btn-sm mt-3 ">Konfirmasi Pembayaran</a>
                             </div>
                         </div>
                     </div>

@@ -13,6 +13,7 @@ use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TagihanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaliController;
+use App\Http\Controllers\WaliMuridPembayaranController;
 use App\Http\Controllers\WaliMuridSiswaController;
 use App\Http\Controllers\WaliMuridTagihanController;
 use App\Http\Controllers\WaliSiswaController;
@@ -88,6 +89,9 @@ Route::prefix('wali')->middleware(['auth', 'auth.wali'])->name('wali.')->group(f
 
     // tagihan
     Route::resource('tagihan', WaliMuridTagihanController::class);
+
+    // pembayaran
+    Route::resource('pembayaran', WaliMuridPembayaranController::class);
 });
 
 
