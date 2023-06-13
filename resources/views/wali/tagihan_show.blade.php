@@ -8,8 +8,80 @@
 
             <div class="card-body">
 
+                <div class="row">
+                    <div class="col-md-2 text-center mb-2">
+                        <img src="{{ \Storage::url($siswa->foto ?? 'images/noimg.png') }}" width="200"
+                            alt="{{ $siswa->nama }}" class="img-fluid">
+                    </div>
+
+                    <div class="col-md-5">
+                        <table class="table table-sm ">
+
+                            <tr>
+                                <td width="100">NISN</td>
+                                <td>:</td>
+                                <td>{{ $siswa->nisn }}</td>
+                            </tr>
+                            <tr>
+                                <td>Nama</td>
+                                <td>:</td>
+                                <td>{{ $siswa->nama }}</td>
+                            </tr>
+                            <tr>
+                                <td>Jurusan</td>
+                                <td>:</td>
+                                <td>{{ $siswa->jurusan }}</td>
+                            </tr>
+                            <tr>
+                                <td>Angkatan</td>
+                                <td>:</td>
+                                <td>{{ $siswa->nama }}</td>
+                            </tr>
+                            <tr>
+                                <td>Kelas</td>
+                                <td>:</td>
+                                <td>{{ $siswa->kelas }}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="col-md-5 ">
+                        <table class="table table-sm">
+                            <tr>
+                                <td>No. Tagihan</td>
+                                <td>:</td>
+                                <td>#{{ $tagihan->id }}</td>
+                            </tr>
+                            <tr>
+                                <td>Tgl. Tagihan</td>
+                                <td>:</td>
+                                <td>{{ $tagihan->tanggal_tagihan->translatedFormat('d F Y') }}</td>
+                            </tr>
+                            <tr>
+                                <td>Tgl. Akhir Pembayaran</td>
+                                <td>:</td>
+                                <td>{{ $tagihan->tanggal_jatuh_tempo->translatedFormat('d F Y') }}</td>
+                            </tr>
+                            <tr>
+                                <td>Status Pembayaran</td>
+                                <td>:</td>
+                                <td>{{ $tagihan->getStatusTagihanWali() }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="text-end"><a href="" target="_blank"><i class="fas fa-file "></i>
+                                        &nbsp; Cetak
+                                        Invoice Tagihan</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+
+                <br>
+
                 <table class="table table-sm table-bordered mb-2">
-                    <thead>
+                    <thead class="table-dark">
                         <tr>
                             <td width="1%">No</td>
                             <td>Nama Tagihan</td>
@@ -42,6 +114,9 @@
                     <p class="text-warning mt-3"><i class="fas fa-circle-exclamation"></i> &nbsp; Jangan Melakukan
                         Tranfer Ke Rekening selain dari
                         Rekening dibawah ini.</p>
+
+                    <p>Setelah melakukan pembayaran, silahkan upload bukti pembayaran melalui tombol konfirmasi yang ada
+                        dibawah ini. </p>
                 </div>
 
                 <ul>
@@ -53,13 +128,12 @@
                     </li>
                 </ul>
 
-                <p>Setelah melakukan pembayaran, silahkan upload bukti pembayaran melalui tombol konfirmasi yang ada
-                    dibawah ini. </p>
+
 
                 <div class="row">
                     @foreach ($banksekolah as $itemBank)
                     <div class="col-md-6">
-                        <div class="alert alert-danger" role="alert">
+                        <div class="alert alert-info" role="alert">
                             <table>
 
                                 <tr>
