@@ -37,4 +37,37 @@ class WaliMuridPembayaranController extends Controller
 
         return view('wali.pembayaran_form', $data);
     }
+
+    public function store(Request $request)
+    {
+        if ($request->filled('pilihan_bank')) {
+            $bankId                 = $request->bank_id;
+            $bank                   = Bank::findOrFail($bankId);
+
+
+            if ($request->filled('simpan_data_rekening')) {
+                $requestDataBank = $request->validate([
+                    'nama_rekening'    => 'required',
+                    'nomor_rekening'   => 'required',
+                ]);
+
+                $waliBank = WaliBank::firstOrCreate(
+                    $requestDataBank,
+                    [
+                        'nama_rekening' => $requestDataBank['nama_rekening'],
+                        'wali_id'       => Auth::user()->id,
+                        'kode'          => $bank->sandi_bank,
+                        'nama_bank'     => $bank->nama_bank,
+                    ]
+                );
+
+                dd($waliBank);
+            }
+        } else {
+            $waliBankId     = $request->wali_bank_id;
+            $waliBank       = WaliBank::findOrFail($waliBankId);
+        }
+
+        dd($waliBank);
+    }
 }
