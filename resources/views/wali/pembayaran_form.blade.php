@@ -14,57 +14,118 @@
                 'method' => $method,
                 ]) !!}
 
-                <div class="form-group mb-3">
-                    <label for="bank_id" class="mb-1">Bank Tujuan</label>
-                    {!! Form::select('bank_id', $listBank, request('bank_sekolah_id'), ['class' => 'form-control
-                    select2', 'placeholder' => '-- Pilih --', 'id' => 'pilih_bank']) !!}
-                    <span class="text-danger">{{ $errors->first('bank_id') }}</span>
+                <small><i class="fas fa-circle-exclamation"></i> &nbsp; INFORMASI REKENING PENGIRIM</small>
+                <div class="card mb-3" style="background-color: #e9e9e9">
+                    <div class="card-header">
+                        <div class="alert alert-warning" role="alert">
+                            Informasi ini dibutuhkan agar operator sekolah dapat memverifikasi pembayaran yang dilakukan
+                            oleh wali murid melalui bank.
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group mb-3">
+                                    <label for="nama_pengirim" class="mb-1">Nama Bank Pengirim</label>
+                                    {!! Form::select('bank_id', $listBank, null, ['class' => 'form-control select2',
+                                    'placeholder' =>
+                                    '-- Pilih --']) !!}
+                                    <span class="text-danger">{{ $errors->first('nama_pengirim') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mb-3">
+                                    <label for="rekening_bank_pengirim" class="mb-1">Nama Bank Pengirim</label>
+                                    {!! Form::text('rekening_bank_pengirim', null, ['class' => 'form-control']) !!}
+                                    <span class="text-danger">{{ $errors->first('rekening_bank_pengirim') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group mb-3">
+                                    <label for="no_rekening_bank_pengirim" class="mb-1">No Rekening Pengirim</label>
+                                    {!! Form::text('no_rekening_bank_pengirim', null, ['class' => 'form-control']) !!}
+                                    <span class="text-danger">{{ $errors->first('no_rekening_bank_pengirim') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                @if (request('bank_sekolah_id') != '')
-                <div class="alert alert-dark mt-2 mb-2" role="alert">
-                    <table>
+                <small><i class="fas fa-circle-exclamation"></i> &nbsp; INFORMASI REKENING TUJUAN</small>
+                <div class="card mb-3" style="background-color: #e9e9e9">
 
-                        <tr>
-                            <td width="100">Nama Bank</td>
-                            <td>: &nbsp;</td>
-                            <td>{{ $bankYangDipilih->nama_bank }}</td>
-                        </tr>
-                        <tr>
-                            <td>No. Rekening</td>
-                            <td>: &nbsp;</td>
-                            <td>{{ $bankYangDipilih->nomor_rekening }}</td>
-                        </tr>
-                        <tr>
-                            <td>Atas Nama</td>
-                            <td>: &nbsp;</td>
-                            <td>{{ $bankYangDipilih->nama_rekening }}</td>
-                        </tr>
-                    </table>
+                    <div class="card-body">
+                        <div class="form-group mb-3">
+                            <label for="bank_id" class="mb-1">Bank Tujuan</label>
+                            {!! Form::select('bank_id', $listBankSekolah, request('bank_sekolah_id'), ['class' =>
+                            'form-control
+                            select2', 'placeholder' => '-- Pilih --', 'id' => 'pilih_bank']) !!}
+                            <span class="text-danger">{{ $errors->first('bank_id') }}</span>
+                        </div>
+
+                        @if (request('bank_sekolah_id') != '')
+                        <div class="alert alert-dark mt-2 mb-2" role="alert">
+                            <table>
+
+                                <tr>
+                                    <td width="100">Nama Bank</td>
+                                    <td>: &nbsp;</td>
+                                    <td>{{ $bankYangDipilih->nama_bank }}</td>
+                                </tr>
+                                <tr>
+                                    <td>No. Rekening</td>
+                                    <td>: &nbsp;</td>
+                                    <td>{{ $bankYangDipilih->nomor_rekening }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Atas Nama</td>
+                                    <td>: &nbsp;</td>
+                                    <td>{{ $bankYangDipilih->nama_rekening }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        @endif
+                    </div>
                 </div>
-                @endif
 
-                <div class="form-group mb-3">
-                    <label for="tanggal_bayar" class="mb-1">Tanggal Bayar</label>
-                    {!! Form::date('tanggal_bayar', $model->tanggal_bayar ?? date('Y-m-d'), ['class' => 'form-control'])
-                    !!}
-                    <span class="text-danger">{{ $errors->first('tanggal_bayar') }}</span>
-                </div>
 
-                <div class="form-group mb-3">
-                    <label for="jumlah_dibayar" class="mb-1">Jumlah Yang Dibayarkan</label>
-                    {!! Form::text('jumlah_dibayar', null, ['class' =>
-                    'form-control rupiah'])
-                    !!}
-                    <span class="text-danger">{{ $errors->first('jumlah_dibayar') }}</span>
-                </div>
+                <small><i class="fas fa-circle-exclamation"></i> &nbsp; INFORMASI PEMBAYARAN</small>
+                <div class="card mb-3" style="background-color: #e9e9e9">
+                    <div class="card-body">
 
-                <div class="form-group mb-3">
-                    <label for="bukti_bayar" class="mb-1">Bukti Bayar</label>
-                    {!! Form::file('bukti_bayar', ['class' =>
-                    'form-control'])
-                    !!}
-                    <span class="text-danger">{{ $errors->first('bukti_bayar') }}</span>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="tanggal_bayar" class="mb-1">Tanggal Bayar</label>
+                                    {!! Form::date('tanggal_bayar', $model->tanggal_bayar ?? date('Y-m-d'), ['class' =>
+                                    'form-control'])
+                                    !!}
+                                    <span class="text-danger">{{ $errors->first('tanggal_bayar') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label for="jumlah_dibayar" class="mb-1">Jumlah Yang Dibayarkan</label>
+                                    {!! Form::text('jumlah_dibayar', null, ['class' =>
+                                    'form-control rupiah'])
+                                    !!}
+                                    <span class="text-danger">{{ $errors->first('jumlah_dibayar') }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group mb-3">
+                            <label for="bukti_bayar" class="mb-1">Bukti Bayar</label>
+                            {!! Form::file('bukti_bayar', ['class' =>
+                            'form-control'])
+                            !!}
+                            <span class="text-danger">{{ $errors->first('bukti_bayar') }}</span>
+                        </div>
+
+                    </div>
                 </div>
 
                 {!! Form::close() !!}

@@ -15,11 +15,12 @@ class WaliMuridPembayaranController extends Controller
         // return $request->bank_sekolah_id;
 
         $data = [
-            'tagihan'       => Tagihan::waliSIswa()->findOrFail($request->tagihan_id),
-            'model'         => new Pembayaran(),
-            'method'        => 'POST',
-            'route'         => 'wali.pembayaran.store',
-            'listBank'      => BankSekolah::pluck('nama_bank', 'id'),
+            'tagihan'           => Tagihan::waliSIswa()->findOrFail($request->tagihan_id),
+            'model'             => new Pembayaran(),
+            'method'            => 'POST',
+            'route'             => 'wali.pembayaran.store',
+            'listBankSekolah'   => BankSekolah::pluck('nama_bank', 'id'),
+            'listBank'          => Bank::pluck('nama_bank', 'id'),
         ];
 
         if ($request->bank_sekolah_id != '') {
