@@ -6,7 +6,9 @@ use App\Models\Bank;
 use App\Models\BankSekolah;
 use App\Models\Pembayaran;
 use App\Models\Tagihan;
+use App\Models\WaliBank;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WaliMuridPembayaranController extends Controller
 {
@@ -21,6 +23,7 @@ class WaliMuridPembayaranController extends Controller
             'route'             => 'wali.pembayaran.store',
             'listBankSekolah'   => BankSekolah::pluck('nama_bank', 'id'),
             'listBank'          => Bank::pluck('nama_bank', 'id'),
+            'listWaliBank'      => WaliBank::where('wali_id', Auth::user()->id)->get()->pluck('nama_bank_full', 'id'),
         ];
 
         if ($request->bank_sekolah_id != '') {
