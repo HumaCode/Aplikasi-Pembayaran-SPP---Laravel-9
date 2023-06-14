@@ -137,7 +137,7 @@
                 <div class="row">
                     @foreach ($banksekolah as $itemBank)
                     <div class="col-md-6">
-                        <div class="alert alert-primary" role="alert">
+                        <div class="alert alert-dark" role="alert">
                             <table>
 
                                 <tr>
