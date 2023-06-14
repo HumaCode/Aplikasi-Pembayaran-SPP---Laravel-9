@@ -49,6 +49,13 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="form-check">
+                            {!! Form::checkbox('simpan_data_rekening', 1, true, ['class' => 'form-check-input', 'id' =>
+                            'defaultCheck3']) !!}
+                            <label class="form-check-label" for="defaultCheck3"> Simpan data ini untuk memudahkan
+                                pembayaran selanjutnya. </label>
+                        </div>
                     </div>
                 </div>
 
@@ -127,6 +134,8 @@
 
                     </div>
                 </div>
+
+                {!! Form::submit('KONFIRMASI', ['class' => 'btn btn-primary']) !!}
 
                 {!! Form::close() !!}
 
