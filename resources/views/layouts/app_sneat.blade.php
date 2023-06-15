@@ -252,25 +252,30 @@
 
                                             <li
                                                 class="list-group-item list-group-item-action dropdown-notifications-item">
-                                                <div class="d-flex">
-                                                    <div class="flex-shrink-0 me-3">
+
+                                                <a href="{{ url($notification->data['url']) }}">
+
+                                                    <div class="d-flex">
+                                                        <div class="flex-shrink-0 me-3">
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <h6 class="mb-1">{{ $notification->data['title'] }}</h6>
+                                                            <p class="mb-0">{{ ucwords($notification->data['messages'])
+                                                                }}
+                                                            </p>
+                                                            <small class="text-muted">{{
+                                                                $notification->created_at->diffForHumans() }}</small>
+                                                        </div>
+                                                        <div class="flex-shrink-0 dropdown-notifications-actions">
+                                                            <a href="javascript:void(0)"
+                                                                class="dropdown-notifications-read"><span
+                                                                    class="badge badge-dot"></span></a>
+                                                            <a href="javascript:void(0)"
+                                                                class="dropdown-notifications-archive"><span
+                                                                    class="bx bx-x"></span></a>
+                                                        </div>
                                                     </div>
-                                                    <div class="flex-grow-1">
-                                                        <h6 class="mb-1">{{ $notification->data['title'] }}</h6>
-                                                        <p class="mb-0">{{ ucwords($notification->data['messages']) }}
-                                                        </p>
-                                                        <small class="text-muted">{{
-                                                            $notification->created_at->diffForHumans() }}</small>
-                                                    </div>
-                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-read"><span
-                                                                class="badge badge-dot"></span></a>
-                                                        <a href="javascript:void(0)"
-                                                            class="dropdown-notifications-archive"><span
-                                                                class="bx bx-x"></span></a>
-                                                    </div>
-                                                </div>
+                                                </a>
                                             </li>
                                             @endforeach
 
