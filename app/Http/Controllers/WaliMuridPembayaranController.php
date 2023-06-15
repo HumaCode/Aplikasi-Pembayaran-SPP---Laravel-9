@@ -49,7 +49,7 @@ class WaliMuridPembayaranController extends Controller
         }
 
 
-        if ($request->filled('pilihan_bank')) {
+        if ($request->nama_rekening != '' && $request->nomor_rekening != '') {
             $bankId                 = $request->bank_id;
             $bank                   = Bank::findOrFail($bankId);
 
