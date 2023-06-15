@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Middleware\Wali;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -49,5 +50,15 @@ class Pembayaran extends Model
         static::updating(function ($tagihan) {
             $tagihan->user_id = auth()->user()->id;
         });
+    }
+
+    /**
+     * Get the wali that owns the Pembayaran
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function wali(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'wali_id');
     }
 }

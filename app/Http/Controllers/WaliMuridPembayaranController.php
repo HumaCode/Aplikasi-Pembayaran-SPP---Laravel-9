@@ -6,9 +6,12 @@ use App\Models\Bank;
 use App\Models\BankSekolah;
 use App\Models\Pembayaran;
 use App\Models\Tagihan;
+use App\Models\User;
 use App\Models\WaliBank;
+use App\Notifications\PembayaranNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Notification;
 
 class WaliMuridPembayaranController extends Controller
 {
@@ -94,7 +97,11 @@ class WaliMuridPembayaranController extends Controller
             'user_id'           => 0,
         ];
 
-        Pembayaran::create($dataPembayaran);
+        $pembayaran = Pembayaran::create($dataPembayaran);
+
+        $userOperator = User::where('akses', 'operator')->get();
+        Notification::send($userOperator, new PembayaranNotification($pembayaran));
+
         flash('Pembayaran berhasil disimpan dan akan segera dikonfirmasi oleh operator')->success();
         return back();
     }
