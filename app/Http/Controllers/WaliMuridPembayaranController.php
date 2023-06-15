@@ -40,6 +40,12 @@ class WaliMuridPembayaranController extends Controller
 
     public function store(Request $request)
     {
+        if ($request->wali_bank_id == '' && $request->nomor_rekening == '') {
+            flash('Silahkan pilih bank pengirim')->error();
+            return back();
+        }
+
+
         if ($request->filled('pilihan_bank')) {
             $bankId                 = $request->bank_id;
             $bank                   = Bank::findOrFail($bankId);
@@ -60,14 +66,36 @@ class WaliMuridPembayaranController extends Controller
                         'nama_bank'     => $bank->nama_bank,
                     ]
                 );
-
-                dd($waliBank);
             }
         } else {
             $waliBankId     = $request->wali_bank_id;
             $waliBank       = WaliBank::findOrFail($waliBankId);
         }
 
-        dd($waliBank);
+        $request->validate([
+            'tanggal_bayar'     => 'required',
+            'jumlah_dibayar'    => 'required',
+            'bukti_bayar'       => 'required|image|mimes:jpg,png,jpeg|max:5048',
+        ]);
+
+
+        $buktiBayar = $request->file('bukti_bayar')->store('public');
+
+        $dataPembayaran = [
+            'bank_sekolah_id'   => $request->bank_sekolah_id,
+            'wali_bank_id'      => $waliBank->id,
+            'tagihan_id'        => $request->tagihan_id,
+            'wali_id'           => auth()->user()->id,
+            'tanggal_bayar'     => $request->tanggal_bayar,
+            'status_konfirmasi' => 'belum',
+            'jumlah_dibayar'    => str_replace('.', '', $request->jumlah_dibayar),
+            'bukti_bayar'       => $buktiBayar,
+            'metode_pembayaran' => 'transfer',
+            'user_id'           => 0,
+        ];
+
+        Pembayaran::create($dataPembayaran);
+        flash('Pembayaran berhasil disimpan dan akan segera dikonfirmasi oleh operator')->success();
+        return back();
     }
 }
