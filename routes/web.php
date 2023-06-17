@@ -10,6 +10,7 @@ use App\Http\Controllers\KartuSppController;
 use App\Http\Controllers\KwitansiPembayaranController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\TagihanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaliController;
@@ -75,6 +76,9 @@ Route::prefix('operator')->middleware(['auth', 'auth.operator'])->group(function
 
     // kartu spp
     Route::get('kartuspp', [KartuSppController::class, 'index'])->name('kartuspp.index');
+
+    // status akun siswa
+    Route::get('status/update', [StatusController::class, 'update'])->name('status.update');
 });
 
 // login wali

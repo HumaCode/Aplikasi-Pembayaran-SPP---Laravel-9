@@ -15,8 +15,16 @@
                     <table class="table table-striped table-sm">
                         <thead>
                             <tr>
-                                <td width="20%">ID</td>
-                                <td>: {{ $model->id }}</td>
+                                <td width="20%">Status Siswa</td>
+                                <td>:
+                                    @if ($model->status == 'aktif')
+                                    <span class="badge text-bg-success">{{ $model->status }}</span>
+
+                                    @else
+                                    <span class="badge text-bg-danger">{{ $model->status }}</span>
+
+                                    @endif
+                                </td>
                             </tr>
                             <tr>
                                 <td>NAMA</td>
@@ -53,8 +61,57 @@
                         </thead>
                     </table>
 
+                    <h3 class="mt-3">Daftar Tagihan</h3>
+
+                    <table class="table table-sm table-bordered mb-2">
+                        <thead class="fw-bold text-center">
+                            <tr>
+                                <td width="10%">No</td>
+                                <td>Nama Tagihan</td>
+                                <td width="150">Jumlah Tagihan</td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach ($model->biaya->childern as $item)
+                            <tr>
+                                <td class="text-center">{{ $loop->iteration }}.</td>
+                                <td>{{ $item->nama }}</td>
+                                <td class="text-end">{{ format_rupiah($item->jumlah) }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2"><strong>Total Pembayaran</strong></td>
+                                <td class="text-end"><strong>{{
+                                        format_rupiah($model->biaya->childern->sum('jumlah'))
+                                        }}</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
                 </div>
 
+            </div>
+
+            <div class="card-footer">
+                @if ($model->status == 'aktif')
+
+                <a href="{{ route('status.update', [
+                    'model' => 'siswa',
+                    'id' => $model->id,
+                    'status' => 'non-aktif',
+                ]) }}" class="badge text-bg-danger" onclick="return confirm('Non-Aktifkan Akun Ini..?')">Nonaktifkan
+                    Akun</a>
+
+                @else
+                <a href="{{ route('status.update', [
+                    'model' => 'siswa',
+                    'id' => $model->id,
+                    'status' => 'aktif',
+                ]) }}" class="badge text-bg-success" onclick="return confirm('Aktifkan Akun Ini..?')">Aktifkan Akun</a>
+                @endif
             </div>
         </div>
     </div>

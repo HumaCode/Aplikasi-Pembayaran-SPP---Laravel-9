@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use Spatie\ModelStatus\HasStatuses;
 
 class Siswa extends Model
 {
     use HasFactory;
     use SearchableTrait;
+    use HasStatuses;
 
     protected $guarded = [];
     protected $searchable = [

@@ -80,7 +80,9 @@ class SiswaController extends Controller
 
         $requestData['user_id'] = auth()->user()->id;
 
-        Model::create($requestData);
+        $siswa = Model::create($requestData);
+
+        $siswa->setStatus('aktif');
 
         flash('Data berhasil ditambahkan');
 
