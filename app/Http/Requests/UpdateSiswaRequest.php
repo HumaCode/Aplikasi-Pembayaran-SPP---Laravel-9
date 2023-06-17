@@ -26,6 +26,7 @@ class UpdateSiswaRequest extends FormRequest
         return [
             'wali_id'   => 'nullable',
             'nama'      => 'required',
+            'biaya_id'  => 'required|exists:biayas,id',
             'nisn'      => 'required|unique:siswas,nisn,' . $this->siswa,
             'jurusan'   => 'required',
             'kelas'     => 'required',

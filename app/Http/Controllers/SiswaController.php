@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSiswaRequest;
 use App\Http\Requests\UpdateSiswaRequest;
+use App\Models\Biaya;
 use App\Models\Siswa as Model;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -47,6 +48,7 @@ class SiswaController extends Controller
     public function create()
     {
         $data = [
+            'listBiaya' => Biaya::has('childern')->whereNull('parent_id')->pluck('nama', 'id'),
             'model'     => new User(),
             'method'    => 'POST',
             'route'     => $this->routePrefix . '.store',
@@ -110,6 +112,7 @@ class SiswaController extends Controller
     {
         $data = [
             'model'     => Model::findOrFail($id),
+            'listBiaya' => Biaya::has('childern')->whereNull('parent_id')->pluck('nama', 'id'),
             'method'    => 'PUT',
             'route'     => [$this->routePrefix . '.update', $id],
             'button'    => 'Ubah Data',

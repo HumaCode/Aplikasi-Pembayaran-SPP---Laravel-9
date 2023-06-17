@@ -29,6 +29,16 @@ class Siswa extends Model
     ];
 
     /**
+     * Get the biaya that owns the Siswa
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function biaya(): BelongsTo
+    {
+        return $this->belongsTo(Biaya::class);
+    }
+
+    /**
      * Get the user that owns the Siswa
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

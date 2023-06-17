@@ -31,7 +31,7 @@
                                 <td>Jurusan</td>
                                 <td>Kelas</td>
                                 <td>Angkatan</td>
-                                <td>Created</td>
+                                <td>Total Biaya</td>
                                 <td>Aksi</td>
                             </tr>
                         </thead>
@@ -53,7 +53,7 @@
                                 <td>{{ $item->jurusan }}</td>
                                 <td>{{ $item->kelas }}</td>
                                 <td>{{ $item->angkatan }}</td>
-                                <td>{{ $item->user->name }}</td>
+                                <td><small>{{ format_rupiah($item->biaya?->first()->total_tagihan) }}</small></td>
                                 <td width="250" class="text-center">
 
                                     {!! Form::open([
