@@ -6,6 +6,7 @@ use App\Models\Pembayaran;
 use App\Http\Requests\StorePembayaranRequest;
 use App\Http\Requests\UpdatePembayaranRequest;
 use App\Models\Tagihan;
+use Illuminate\Http\Request;
 
 class PembayaranController extends Controller
 {
@@ -38,9 +39,10 @@ class PembayaranController extends Controller
     public function store(StorePembayaranRequest $request)
     {
         $requestData = $request->validated();
-        $requestData['status_konfirmasi'] = 'sudah';
-        $requestData['metode_pembayaran'] = 'manual';
-        $tagihan                          = Tagihan::findOrFail($requestData['tagihan_id']);
+        $requestData['status_konfirmasi']   = 'sudah';
+        $requestData['tanggal_konfirmasi']  = now();
+        $requestData['metode_pembayaran']   = 'manual';
+        $tagihan                            = Tagihan::findOrFail($requestData['tagihan_id']);
 
         if ($requestData['jumlah_dibayar'] >= $tagihan->tagihanDetail->sum('jumlah_biaya')) {
             $tagihan->status = 'lunas';
@@ -66,6 +68,7 @@ class PembayaranController extends Controller
 
         return view('operator.pembayaran_show', [
             'model' => $pembayaran,
+            'route' => ['pembayaran.update', $pembayaran->id],
         ]);
     }
 
@@ -87,9 +90,18 @@ class PembayaranController extends Controller
      * @param  \App\Models\Pembayaran  $pembayaran
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatePembayaranRequest $request, Pembayaran $pembayaran)
+    public function update(Request $request, Pembayaran $pembayaran)
     {
-        //
+        $pembayaran->status_konfirmasi  = 'sudah';
+        $pembayaran->tanggal_konfirmasi = now();
+        $pembayaran->user_id            = auth()->user()->id;
+        $pembayaran->save();
+
+        $pembayaran->tagihan->status = 'lunas';
+        $pembayaran->tagihan->save();
+
+        flash('Pembayaran berhasil dikonfirmasi')->success();
+        return back();
     }
 
     /**

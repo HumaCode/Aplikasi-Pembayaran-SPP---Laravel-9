@@ -111,7 +111,7 @@
                             </tr>
                             <tr>
                                 <th>Tanggal Pembayaran</th>
-                                <td>: {{ $model->tanggal_bayar->translatedFormat('d-m-Y') }}</td>
+                                <td>: {{ optional($model->tanggal_bayar)->translatedFormat('d F Y') }}</td>
                             </tr>
                             <tr>
                                 <th>Jumlah Tagihan</th>
@@ -157,11 +157,40 @@
                                     @endif
                                 </td>
                             </tr>
+                            <tr>
+                                <th>Tanggal Konfirmasi</th>
+                                <td>:
+                                    @if ($model->tanggal_konfirmasi == null)
+                                    <span class="badge rounded-pill text-bg-danger">
+                                        Belum dikonfirmasi oleh Operator</span>
+                                    @else
+                                    {{ optional($model->tanggal_konfirmasi)->translatedFormat('d F Y H:i') }}
+                                    @endif
+
+                                </td>
+                            </tr>
                         </thead>
                     </table>
+
+                    @if ($model->tanggal_konfirmasi == null)
                     <div class="text-end">
-                        <a href="" class="btn btn-primary mt-2 ">KONFIRMASI PEMBAYARAN</a>
+                        {!! Form::open([
+                        'route' => $route,
+                        'method' => 'PUT',
+                        'onsubmit' => 'return confirm("Apakah anda yakin.?")'
+                        ]) !!}
+                        {!! Form::hidden('pembayaran_id', $model->id, []) !!}
+
+                        {!! Form::submit('KONFIRMASI PEMBAYARAN', ['class' => 'btn btn-primary mt-2']) !!}
+
+                        {!! Form::close() !!}
                     </div>
+                    @else
+                    <div class="alert alert-dark text-center mt-3" role="alert">
+                        <strong class="fs-2">TAGIHAN INI SUDAH LUNAS</strong>
+                    </div>
+                    @endif
+
                 </div>
 
             </div>
