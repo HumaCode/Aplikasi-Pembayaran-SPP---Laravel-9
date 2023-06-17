@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Services\WhacenterService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -17,9 +18,11 @@ class PembayaranNotification extends Notification
      * @return void
      */
     private $pembayaran;
-    public function __construct($pembayaran)
+    private $user;
+    public function __construct($pembayaran, $user)
     {
         $this->pembayaran = $pembayaran;
+        $this->user = $user;
     }
 
     /**
@@ -30,7 +33,7 @@ class PembayaranNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', WhacenterChannel::class];
     }
 
     /**
@@ -63,5 +66,13 @@ class PembayaranNotification extends Notification
             'messages'          => $this->pembayaran->wali->name . ' telah melakukan pembayaran tagihan.',
             'url'               => route('pembayaran.show', $this->pembayaran->id),
         ];
+    }
+
+    public function toWhacenter($notifiable)
+    {
+        return (new WhacenterService())
+            ->to($this->user->nohp)
+            ->line("Transaksi Pembayaran, " . $this->user->name)
+            ->line('User melakukan pembayaran.');
     }
 }
