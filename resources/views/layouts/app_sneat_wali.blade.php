@@ -159,7 +159,8 @@
                     </li>
 
                     <!-- tagihan -->
-                    <li class="menu-item {{ \Route::is('wali.tagihan.*') ? 'active' : '' }}">
+                    <li
+                        class="menu-item {{ \Route::is('wali.tagihan.*') || \Route::is('wali.pembayaran.*') ? 'active' : '' }}">
                         <a href="{{ route('wali.tagihan.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Data Tagihan</div>
@@ -167,12 +168,12 @@
                     </li>
 
                     <!-- pembayaran -->
-                    <li class="menu-item {{ \Route::is('wali.pembayaran.*') ? 'active' : '' }}">
+                    {{-- <li class="menu-item {{ \Route::is('wali.pembayaran.*') ? 'active' : '' }}">
                         <a href="{{ route('wali.pembayaran.index') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-collection"></i>
                             <div data-i18n="Basic">Data Pembayaran</div>
                         </a>
-                    </li>
+                    </li> --}}
 
                     <!-- logout -->
                     <li class="menu-item">
