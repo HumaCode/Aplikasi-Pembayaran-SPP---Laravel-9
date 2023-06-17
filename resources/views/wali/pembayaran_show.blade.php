@@ -1,4 +1,4 @@
-@extends('layouts.app_sneat')
+@extends('layouts.app_sneat_wali')
 
 @section('content')
 <div class="row">
@@ -155,7 +155,7 @@
                                     @endif
                                 </td>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <th>Status Pembayaran</th>
                                 <td>:
                                     @if ($model->tagihan->getStatusTagihanWali() == 'Belum Dibayar')
@@ -166,7 +166,7 @@
                                         $model->tagihan->getStatusTagihanWali() }}</span>
                                     @endif
                                 </td>
-                            </tr>
+                            </tr> --}}
                             <tr>
                                 <th>Tanggal Konfirmasi</th>
                                 <td>:
@@ -182,24 +182,30 @@
                         </thead>
                     </table>
 
-                    @if ($model->tanggal_konfirmasi == null)
-                    <div class="text-end">
-                        {!! Form::open([
-                        'route' => $route,
-                        'method' => 'PUT',
-                        'onsubmit' => 'return confirm("Apakah anda yakin.?")'
-                        ]) !!}
-                        {!! Form::hidden('pembayaran_id', $model->id, []) !!}
+                    @if ($model->tanggal_konfirmasi != null)
 
-                        {!! Form::submit('KONFIRMASI PEMBAYARAN', ['class' => 'btn btn-primary mt-2']) !!}
-
-                        {!! Form::close() !!}
-                    </div>
-                    @else
                     <div class="alert alert-dark text-center mt-3" role="alert">
                         <strong class="fs-2">TAGIHAN INI SUDAH LUNAS</strong>
                     </div>
+
+                    @else
+
+                    <div class="text-end">
+                        {!! Form::open([
+                        'route' => ['wali.pembayaran.destroy', $model->id],
+                        'method' => 'DELETE',
+                        'onsubmit' => 'return confirm("Apakah yakin akan membatalkan data pembayaran ini.?")',
+                        ]) !!}
+
+                        <button type="submit" class="btn btn-danger mt-2">
+                            BATALKAN PEMBAYARAN</button>
+
+                        {!! Form::close() !!}
+                    </div>
+
                     @endif
+
+
 
                 </div>
 

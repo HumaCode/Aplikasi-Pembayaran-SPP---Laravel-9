@@ -9,7 +9,9 @@
             <div class="card-body">
 
                 <div class="table-responsive">
-                    <img src="{{ \Storage::url($model->foto ?? 'images/noimg.png') }}" width="150" alt="">
+                    <img src="{{ ($model->foto == null) ? asset('assets/img/avatars/noimg.png') : \Storage::url($model->foto) }}"
+                        width="150" alt="">
+
                     <table class="table table-striped table-sm">
                         <thead>
                             <tr>

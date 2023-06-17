@@ -63,15 +63,20 @@
                                     ]) !!}
 
                                     <a href="{{ route($routePrefix . '.show', $item->id) }}"
-                                        class="btn btn-info btn-sm mb-1"><i class="fa-regular fa-eye"></i>
-                                        &nbsp; Detail</a>
+                                        class="btn btn-info btn-sm mb-2" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Detail"><i
+                                            class="fa-regular fa-eye"></i>
+                                    </a>
 
                                     <a href="{{ route($routePrefix . '.edit', $item->id) }}"
-                                        class="btn btn-success btn-sm mb-1"><i class="fa-regular fa-pen-to-square"></i>
-                                        &nbsp; Edit</a>
+                                        class="btn btn-success btn-sm mb-2" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Edit"><i
+                                            class="fa-regular fa-pen-to-square"></i>
+                                    </a>
 
-                                    <button type="submit" class="btn btn-danger btn-sm mb-1"><i
-                                            class="fa-solid fa-trash"></i> &nbsp; Hapus</button>
+                                    <button type="submit" class="btn btn-danger btn-sm mb-2" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Hapus"><i
+                                            class="fa-solid fa-trash"></i></button>
 
 
                                     {!! Form::close() !!}

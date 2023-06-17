@@ -67,22 +67,10 @@
                                 </td>
                                 <td width="150" class="text-center">
 
-                                    {!! Form::open([
-                                    'route' => ['wali.pembayaran.destroy', $item->id],
-                                    'method' => 'DELETE',
-                                    'onsubmit' => 'return confirm("Apakah yakin akan menghapus data ini.?")',
-                                    ]) !!}
-
                                     <a href="{{ route('wali.pembayaran.show', $item->id) }}"
                                         class="btn btn-info btn-sm mx-3 mb-1"><i class="fa-regular fa-eye"></i>
                                         &nbsp; Detail</a>
 
-
-                                    <button type="submit" class="btn btn-danger btn-sm mb-1"><i
-                                            class="fa-solid fa-trash"></i> &nbsp; Hapus</button>
-
-
-                                    {!! Form::close() !!}
                                 </td>
 
                             </tr>

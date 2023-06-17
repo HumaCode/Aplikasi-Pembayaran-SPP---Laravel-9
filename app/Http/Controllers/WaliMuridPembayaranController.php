@@ -12,6 +12,7 @@ use App\Notifications\PembayaranNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Notification;
 
 class WaliMuridPembayaranController extends Controller
@@ -37,7 +38,6 @@ class WaliMuridPembayaranController extends Controller
 
         return view('wali.pembayaran_show', [
             'model' => $pembayaran,
-            'route' => ['pembayaran.update', $pembayaran->id],
         ]);
     }
 
@@ -154,6 +154,30 @@ class WaliMuridPembayaranController extends Controller
 
 
         flash('Pembayaran berhasil disimpan dan akan segera dikonfirmasi oleh operator')->success();
-        return back();
+        return redirect()->route('wali.pembayaran.show', $pembayaran->id);
+    }
+
+    public function destroy($id)
+    {
+        $pembayaran = Pembayaran::findOrFail($id);
+
+        if ($pembayaran->tanggal_konfirmasi != null) {
+            flash('Data pembayaran ini sudah di konfirmasi, tidak bisa di hapus');
+            return back();
+        }
+
+        $imagePath = $pembayaran->bukti_bayar;
+
+        if (Storage::exists($imagePath)) {
+            Storage::delete($imagePath);
+            echo "Gambar berhasil dihapus.";
+        } else {
+            echo "Gambar tidak ditemukan.";
+        }
+
+        $pembayaran->delete();
+
+        flash('Data pembayaran berhasil dihapus')->success();
+        return redirect()->route('wali.pembayaran.index');
     }
 }
