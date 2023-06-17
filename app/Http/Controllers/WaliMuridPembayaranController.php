@@ -123,7 +123,7 @@ class WaliMuridPembayaranController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
 
-            flash('Gagal menyimpan data pembayaran ' + $th->getMessage())->error();
+            flash('Gagal menyimpan data pembayaran ' . $th->getMessage())->error();
             return back();
         }
 

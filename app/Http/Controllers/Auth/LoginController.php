@@ -40,6 +40,23 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function loginUrl(Request $request)
+    {
+        if (!$request->hasValidSignature()) {
+            abort(401);
+        }
+
+        $encodedUrl = $request->url;
+        $decodedUrl = urldecode($encodedUrl);
+        // dd($decodedUrl);
+
+        $user = Auth::loginUsingId($request->user_id);
+
+        // // dd($request->url);
+
+        return redirect($decodedUrl);
+    }
+
     public function showLoginForm()
     {
         return view('auth.login_sneat');

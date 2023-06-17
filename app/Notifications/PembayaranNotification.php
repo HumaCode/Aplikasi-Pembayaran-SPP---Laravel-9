@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\URL;
 
 class PembayaranNotification extends Notification
 {
@@ -18,11 +19,9 @@ class PembayaranNotification extends Notification
      * @return void
      */
     private $pembayaran;
-    private $user;
-    public function __construct($pembayaran, $user)
+    public function __construct($pembayaran)
     {
         $this->pembayaran = $pembayaran;
-        $this->user = $user;
     }
 
     /**
@@ -33,7 +32,8 @@ class PembayaranNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database', WhacenterChannel::class];
+        // return ['database', WhacenterChannel::class];
+        return ['database'];
     }
 
     /**
@@ -70,9 +70,22 @@ class PembayaranNotification extends Notification
 
     public function toWhacenter($notifiable)
     {
+        echo $url = URL::temporarySignedRoute(
+            'login.url',
+            now()->addDays(10),
+            [
+                'pembayaran_id' => $this->pembayaran->id,
+                'user_id' => $notifiable->id,
+                'url' => route('pembayaran.show', $this->pembayaran->id),
+            ]
+        );
+
         return (new WhacenterService())
-            ->to($this->user->nohp)
-            ->line("Transaksi Pembayaran, " . $this->user->name)
-            ->line('User melakukan pembayaran.');
+            ->to($notifiable->nohp)
+            ->line("Halo Operator")
+            ->line("Ada Pembayaran Tagihan SPP yang Masuk")
+            ->line($this->pembayaran->wali->name .  ' Telah melakukan pembayaran tagihan.')
+            ->line('Untuk melihat info pembayaran, klik link berikut' . $url)
+            ->line('JANGAN BERIKAN LINK INI KE SIAPAPUN.!!');
     }
 }
