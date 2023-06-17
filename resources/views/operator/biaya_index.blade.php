@@ -26,7 +26,7 @@
                             <tr>
                                 <td>No</td>
                                 <td>Biaya</td>
-                                <td>Jumlah</td>
+                                <td>Total Tagihan</td>
                                 <td>Created</td>
                                 <td>Aksi</td>
                             </tr>
@@ -38,7 +38,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->nama }}</td>
-                                <td>{{ $item->format_rupiah('jumlah') }}</td>
+                                <td>{{ format_rupiah($item->total_tagihan) }}</td>
                                 <td>{{ $item->user->name }}</td>
                                 <td width="250" class="text-center">
 
@@ -48,16 +48,20 @@
                                     'onsubmit' => 'return confirm("Apakah yakin akan menghapus data ini.?")',
                                     ]) !!}
 
-                                    {{-- <a href="{{ route($routePrefix . '.show', $item->id) }}"
-                                        class="btn btn-info btn-sm mb-1"><i class="fa-regular fa-eye"></i>
-                                        &nbsp; Detail</a> --}}
+                                    <a href="{{ route($routePrefix . '.create', ['parent_id' => $item->id]) }}"
+                                        class="btn btn-info btn-sm mb-1" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Items"><i class="fas fa-sitemap"></i>
+                                    </a>
 
                                     <a href="{{ route($routePrefix . '.edit', $item->id) }}"
-                                        class="btn btn-success btn-sm mb-1"><i class="fa-regular fa-pen-to-square"></i>
-                                        &nbsp; Edit</a>
+                                        class="btn btn-success btn-sm mb-1 mx-2" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Edit"><i
+                                            class="fa-regular fa-pen-to-square"></i>
+                                    </a>
 
-                                    <button type="submit" class="btn btn-danger btn-sm mb-1"><i
-                                            class="fa-solid fa-trash"></i> &nbsp; Hapus</button>
+                                    <button type="submit" class="btn btn-danger btn-sm mb-1" data-bs-toggle="tooltip"
+                                        data-bs-placement="bottom" data-bs-title="Hapus"><i
+                                            class="fa-solid fa-trash"></i></button>
 
 
                                     {!! Form::close() !!}

@@ -29,9 +29,9 @@ class BiayaController extends Controller
     {
         // pencarian
         if ($request->filled('q')) {
-            $models = Model::with('user')->search($request->q)->paginate(50);
+            $models = Model::with('user')->whereNull('parent_id')->search($request->q)->paginate(50);
         } else {
-            $models = Model::with('user')->latest()->paginate(50);
+            $models = Model::with('user')->whereNull('parent_id')->latest()->paginate(50);
         }
 
         return view('operator.' . $this->viewIndex, [
@@ -46,14 +46,21 @@ class BiayaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $biaya = new Model();
+        if ($request->filled('parent_id')) {
+            $biaya = Model::with('childern')->findOrFail($request->parent_id);
+        }
+
+
         $data = [
-            'model'     => new Model(),
-            'method'    => 'POST',
-            'route'     => $this->routePrefix . '.store',
-            'button'    => 'Simpan Data',
-            'title'     => 'Tambah Data Biaya',
+            'parentData'    => $biaya,
+            'model'         => new Model(),
+            'method'        => 'POST',
+            'route'         => $this->routePrefix . '.store',
+            'button'        => 'Simpan Data',
+            'title'         => 'Tambah Data Biaya',
         ];
 
         return view('operator.' . $this->viewCreate, $data);
@@ -132,7 +139,21 @@ class BiayaController extends Controller
      */
     public function destroy($id)
     {
-        // return auth()->user()->id;
+        $model = Model::findOrFail($id);
+
+        if ($model->childern->count() >= 1) {
+            flash('Data tidak bisa dihapus, karena masih memiliki item biaya. Silahkan hapus item biaya terlebih dahulu.')->error();
+            return back();
+        }
+
+        $model->delete();
+
+        flash('Data berhasil dihapus');
+        return back();
+    }
+
+    public function deleteItem($id)
+    {
         $model = Model::findOrFail($id);
 
 

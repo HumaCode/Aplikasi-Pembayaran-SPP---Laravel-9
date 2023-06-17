@@ -62,6 +62,7 @@ Route::prefix('operator')->middleware(['auth', 'auth.operator'])->group(function
 
     // wali biaya
     Route::resource('biaya', BiayaController::class);
+    Route::get('delete-biaya-item/{id}', [BiayaCOntroller::class, 'deleteItem'])->name('delete.biaya.item');
 
     // tagihan
     Route::resource('tagihan', TagihanController::class);

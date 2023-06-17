@@ -10,6 +10,41 @@
 
                 {!! Form::model($model, ['route' => $route, 'method' => $method]) !!}
 
+                @if (request()->filled('parent_id'))
+                <h3>{{ $parentData->nama }}</h3>
+
+                {!! Form::hidden('parent_id', $parentData->id, []) !!}
+
+                <table class="table table-hover table-sm my-2">
+                    <thead class="table-dark text-center ">
+                        <tr>
+                            <th class="text-white" width="15%">Parent ID</th>
+                            <th class="text-white">Nama Biaya</th>
+                            <th class="text-white">Jumlah</th>
+                            <th class="text-white">Aksi</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach ($parentData->childern as $item)
+
+                        <tr>
+                            <td class="text-center">{{ $loop->iteration }}.</td>
+                            <td>{{ $item->nama }}</td>
+                            <td>{{ format_rupiah($item->jumlah) }}</td>
+                            <td class="text-center">
+
+                                <a href="{{ route('delete.biaya.item', $item->id) }}" class="btn btn-danger btn-sm"
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Hapus"
+                                    onclick="return confirm('Anda yakin akan menghapus data ini..?')"><i
+                                        class="fa-solid fa-trash"></i></a>
+                            </td>
+                        </tr>
+
+                        @endforeach
+                    </tbody>
+                </table>
+                @endif
 
                 <div class="form-group mb-3">
                     {{-- <label for="name">Nama</label> --}}
