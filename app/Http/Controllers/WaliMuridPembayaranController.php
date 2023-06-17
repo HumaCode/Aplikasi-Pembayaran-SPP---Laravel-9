@@ -106,7 +106,7 @@ class WaliMuridPembayaranController extends Controller
             'tagihan_id'        => $request->tagihan_id,
             'wali_id'           => auth()->user()->id,
             'tanggal_bayar'     => $request->tanggal_bayar,
-            'status_konfirmasi' => 'belum',
+            // 'status_konfirmasi' => 'belum',
             'jumlah_dibayar'    => str_replace('.', '', $jumlahDibayar),
             'bukti_bayar'       => $buktiBayar,
             'metode_pembayaran' => 'transfer',

@@ -133,14 +133,14 @@
                             <tr>
                                 <th>Status Konfirmasi</th>
                                 <td>:
-                                    @if ($model->status_konfirmasi == 'belum')
+                                    @if ($model->status_konfirmasi == 'Belum Dikonfirmasi')
                                     <span class="badge rounded-pill text-bg-danger">{{
                                         ucwords($model->status_konfirmasi) }}
-                                        dikonfirmasi oleh Operator</span>
+                                        oleh Operator</span>
                                     @else
                                     <span class="badge rounded-pill text-bg-success">{{
                                         ucwords($model->status_konfirmasi) }}
-                                        dikonfirmasi oleh Operator</span>
+                                        oleh Operator</span>
 
                                     @endif
                                 </td>

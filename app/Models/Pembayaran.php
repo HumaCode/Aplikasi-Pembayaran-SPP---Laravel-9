@@ -6,6 +6,7 @@ use App\Http\Middleware\Wali;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Pembayaran extends Model
 {
@@ -14,6 +15,19 @@ class Pembayaran extends Model
     protected $guarded = [];
     protected $dates = ['tanggal_bayar', 'tanggal_konfirmasi'];
     protected $with = ['user', 'tagihan'];
+    protected $append = ['status_konfirmasi'];
+
+    /**
+     * Get the user's first name.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function statusKonfirmasi(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => ($this->tanggal_konfirmasi == null) ? 'Belum Dikonfirmasi' : 'Sudah Dikonfirmasi',
+        );
+    }
 
     /**
      * Get the tagihan that owns the Pembayaran
