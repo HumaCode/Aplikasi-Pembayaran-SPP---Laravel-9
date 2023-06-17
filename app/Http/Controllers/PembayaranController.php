@@ -6,6 +6,7 @@ use App\Models\Pembayaran;
 use App\Http\Requests\StorePembayaranRequest;
 use App\Http\Requests\UpdatePembayaranRequest;
 use App\Models\Tagihan;
+use App\Notifications\PembayaranKonfirmasiNotification;
 use Illuminate\Http\Request;
 
 class PembayaranController extends Controller
@@ -98,7 +99,9 @@ class PembayaranController extends Controller
      */
     public function update(Request $request, Pembayaran $pembayaran)
     {
-        // $pembayaran->status_konfirmasi  = 'sudah';
+        $wali = $pembayaran->wali;
+        $wali->notify(new PembayaranKonfirmasiNotification($pembayaran));
+
         $pembayaran->tanggal_konfirmasi = now();
         $pembayaran->user_id            = auth()->user()->id;
         $pembayaran->save();

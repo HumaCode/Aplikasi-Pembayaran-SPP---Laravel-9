@@ -39,7 +39,7 @@
                                     <a href="{{ route('wali.tagihan.show', $item->id) }}"
                                         class="btn btn-primary">Lakukan Pembayaran</a>
                                     @else
-                                    <a href="" class="btn btn-success">Pembayaran Sudah Lunas</a>
+                                    <div class="btn btn-success">Sudah Lunas</div>
                                     @endif
                                 </td>
 

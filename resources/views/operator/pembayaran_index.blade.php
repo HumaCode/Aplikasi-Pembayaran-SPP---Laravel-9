@@ -42,7 +42,7 @@
                                 <td>Nama Wali</td>
                                 <td>Metode Pembayaran</td>
                                 <td>Status Konfirmasi</td>
-                                <td>Tanggal Konfirmasi</td>
+                                <td>Aksi</td>
                             </tr>
                         </thead>
 
@@ -50,12 +50,21 @@
 
                             @forelse ($models as $item)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $loop->iteration }}.</td>
                                 <td>{{ $item->tagihan->siswa->nisn }}</td>
                                 <td>{{ $item->tagihan->siswa->nama }}</td>
                                 <td>{{ $item->wali->name }}</td>
                                 <td>{{ $item->metode_pembayaran }}</td>
-                                <td>{{ $item->status_konfirmasi }}</td>
+                                <td>
+                                    @if ($item->status_konfirmasi == 'Belum Dikonfirmasi')
+                                    <small><span class="badge text-bg-danger">{{ $item->status_konfirmasi
+                                            }}</span></small>
+                                    @else
+                                    <small><span class="badge text-bg-success">{{ $item->status_konfirmasi
+                                            }}</span></small>
+                                    @endif
+
+                                </td>
                                 <td width="250" class="text-center">
 
                                     {!! Form::open([
