@@ -11,12 +11,7 @@
                 <div class="row">
 
                     <div class="col-md-6">
-
-                        <a href="{{ route($routePrefix . '.create') }}" class="btn btn-primary btn-sm mb-2">Tambah
-                            Data</a>
-                    </div>
-                    <div class="col-md-6">
-                        {!! Form::open(['route' => $routePrefix.'.index', 'method' => 'GET']) !!}
+                        {!! Form::open(['route' => 'pembayaran.index', 'method' => 'GET']) !!}
 
                         <div class="row">
                             <div class="col-md-4">
@@ -44,10 +39,10 @@
                                 <td>No</td>
                                 <td>NISN</td>
                                 <td>Nama</td>
-                                <td width="150">Tanggal Tagihan</td>
-                                <td>Status</td>
-                                <td width="150">Total Tagihan</td>
-                                <td>Aksi</td>
+                                <td>Nama Wali</td>
+                                <td>Metode Pembayaran</td>
+                                <td>Status Konfirmasi</td>
+                                <td>Tanggal Konfirmasi</td>
                             </tr>
                         </thead>
 
@@ -55,26 +50,22 @@
 
                             @forelse ($models as $item)
                             <tr>
-                                <td>{{ $loop->iteration }}.</td>
-                                <td>{{ $item->siswa->nisn }}</td>
-                                <td>{{ $item->siswa->nama }}</td>
-                                <td>{{ $item->tanggal_tagihan->format('d F Y') }}</td>
-                                <td>{{ $item->status }}</td>
-                                <td>{{ format_rupiah($item->tagihanDetail->sum('jumlah_biaya')) }}</td>
-                                <td width="200" class="text-center">
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->tagihan->siswa->nisn }}</td>
+                                <td>{{ $item->tagihan->siswa->nama }}</td>
+                                <td>{{ $item->wali->name }}</td>
+                                <td>{{ $item->metode_pembayaran }}</td>
+                                <td>{{ $item->status_konfirmasi }}</td>
+                                <td width="250" class="text-center">
 
                                     {!! Form::open([
-                                    'route' => [$routePrefix . '.destroy', $item->id],
+                                    'route' => ['pembayaran.destroy', $item->id],
                                     'method' => 'DELETE',
                                     'onsubmit' => 'return confirm("Apakah yakin akan menghapus data ini.?")',
                                     ]) !!}
 
-                                    <a href="{{ route($routePrefix . '.show', [
-                                        $item->id,
-                                        'siswa_id'  => $item->siswa_id,
-                                        'bulan'     => $item->tanggal_tagihan->format('m'),
-                                        'tahun'     => $item->tanggal_tagihan->format('Y'),
-                                    ]) }}" class="btn btn-info btn-sm mx-3 mb-1"><i class="fa-regular fa-eye"></i>
+                                    <a href="{{ route('pembayaran.show', $item->id) }}"
+                                        class="btn btn-info btn-sm mx-3 mb-1"><i class="fa-regular fa-eye"></i>
                                         &nbsp; Detail</a>
 
 

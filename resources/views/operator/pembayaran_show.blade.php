@@ -66,6 +66,9 @@
                                 <th>Nama Wali Murid</th>
                                 <td>: {{ ucwords($model->wali->name) }}</td>
                             </tr>
+
+                            @if ($model->metode_pembayaran != 'manual')
+
                             <tr>
                                 <td colspan="2" class="bg-secondary text-white fw-bold">
                                     INFORMASI BANK PENGIRIM
@@ -100,6 +103,9 @@
                                 <th>Atas Nama</th>
                                 <td>: {{ ucwords($model->bankSekolah->nama_rekening) }}</td>
                             </tr>
+
+                            @endif
+
                             <tr>
                                 <td colspan="2" class="bg-secondary text-white fw-bold">
                                     INFORMASI PEMBAYARAN
@@ -121,6 +127,8 @@
                                 <th>Jumlah yang dibayar</th>
                                 <td>: {{ format_rupiah($model->jumlah_dibayar) }}</td>
                             </tr>
+
+                            @if ($model->metode_pembayaran != 'manual')
                             <tr>
                                 <th>Bukti Pembayaran</th>
                                 <td>:
@@ -130,6 +138,8 @@
                                     </a>
                                 </td>
                             </tr>
+                            @endif
+
                             <tr>
                                 <th>Status Konfirmasi</th>
                                 <td>:

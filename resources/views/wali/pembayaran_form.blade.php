@@ -170,7 +170,9 @@
                     </div>
                 </div>
 
-                {!! Form::submit('KONFIRMASI', ['class' => 'btn btn-primary']) !!}
+                <div class="text-end">
+                    {!! Form::submit('SIMPAN', ['class' => 'btn btn-primary']) !!}
+                </div>
 
                 {!! Form::close() !!}
 

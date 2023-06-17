@@ -69,39 +69,51 @@
                     </tbody>
                 </table>
 
-                <h5 class="mt-3">Status Pembayaran : <strong>{{ strtoupper($tagihan->status) }}</strong></h5>
 
+                <h5 class="mt-3">Status Pembayaran :
+                    @if ($tagihan->status == 'baru')
+                    <span class="badge text-bg-danger">{{ strtoupper($tagihan->status) }}</span>
+                    @else
+                    <span class="badge text-bg-success">{{ strtoupper($tagihan->status) }}</span>
+                    @endif
+                </h5>
             </div>
-            <div class="card-header py-1"><strong>FORM PEMBAYARAN</strong></div>
 
-            <div class="card-body">
 
-                {!! Form::model($model, [
-                'route' => 'pembayaran.store',
-                'method' => 'POST',
-                ]) !!}
+            <div class="card-footer">
+                <div class="card text-bg-secondary">
+                    <div class="card-header pb-2"><strong>FORM PEMBAYARAN</strong></div>
+                    <hr>
+                    <div class="card-body">
 
-                {!! Form::hidden('tagihan_id', $tagihan->id, []) !!}
+                        {!! Form::model($model, [
+                        'route' => 'pembayaran.store',
+                        'method' => 'POST',
+                        ]) !!}
 
-                <div class="form-group mb-3">
-                    <label for="tanggal_bayar" class="mb-1">Tanggal Pembayaran</label>
-                    {!! Form::date('tanggal_bayar', $model->tanggal_bayar ?? \Carbon\Carbon::now(), ['class' =>
-                    'form-control']) !!}
-                    <span class="text-danger">{{ $errors->first('tanggal_bayar') }}</span>
+                        {!! Form::hidden('tagihan_id', $tagihan->id, []) !!}
+
+                        <div class="form-group mb-3">
+                            <label for="tanggal_bayar" class="mb-1">Tanggal Pembayaran</label>
+                            {!! Form::date('tanggal_bayar', $model->tanggal_bayar ?? \Carbon\Carbon::now(), ['class' =>
+                            'form-control']) !!}
+                            <span class="text-danger">{{ $errors->first('tanggal_bayar') }}</span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="jumlah_dibayar" class="mb-1">Jumlah Bayar</label>
+                            {!! Form::text('jumlah_dibayar', null, ['class' =>
+                            'form-control rupiah']) !!}
+                            <span class="text-danger">{{ $errors->first('jumlah_dibayar') }}</span>
+                        </div>
+
+                        <div class="form-group mb-2 text-end">
+                            {!! Form::submit('SIMPAN', ['class' => 'btn btn-success btn-sm']) !!}
+                        </div>
+
+                        {!! Form::close() !!}
+                    </div>
                 </div>
-
-                <div class="form-group mb-3">
-                    <label for="jumlah_dibayar" class="mb-1">Jumlah Bayar</label>
-                    {!! Form::text('jumlah_dibayar', null, ['class' =>
-                    'form-control rupiah']) !!}
-                    <span class="text-danger">{{ $errors->first('jumlah_dibayar') }}</span>
-                </div>
-
-                <div class="form-group mb-2">
-                    {!! Form::submit('SIMPAN', ['class' => 'btn btn-primary']) !!}
-                </div>
-
-                {!! Form::close() !!}
             </div>
         </div>
     </div>
@@ -112,27 +124,28 @@
             <div class="card-body">
 
                 <table class="table table-sm table-bordered mb-2">
-                    <thead>
+                    <thead class="fw-bold">
                         <tr>
                             <td>No</td>
                             <td>Nama Tagihan</td>
-                            <td>Jumlah Tagihan</td>
+                            <td width="150">Jumlah Tagihan</td>
                         </tr>
                     </thead>
 
                     <tbody>
                         @foreach ($tagihan->tagihanDetail as $item)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $loop->iteration }}.</td>
                             <td>{{ $item->nama_biaya }}</td>
-                            <td>{{ format_rupiah($item->jumlah_biaya) }}</td>
+                            <td class="text-end">{{ format_rupiah($item->jumlah_biaya) }}</td>
                         </tr>
                         @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
                             <td colspan="2"><strong>Total Pembayaran</strong></td>
-                            <td><strong>{{ format_rupiah($tagihan->tagihanDetail->sum('jumlah_biaya')) }}</strong></td>
+                            <td class="text-end"><strong>{{ format_rupiah($tagihan->tagihanDetail->sum('jumlah_biaya'))
+                                    }}</strong></td>
                         </tr>
                     </tfoot>
                 </table>

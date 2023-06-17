@@ -207,6 +207,14 @@
                         </a>
                     </li>
 
+                    <!-- pembayaran -->
+                    <li class="menu-item {{ \Route::is('pembayaran.*') ? 'active' : '' }}">
+                        <a href="{{ route('pembayaran.index') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-collection"></i>
+                            <div data-i18n="Basic">Data Pembayaran</div>
+                        </a>
+                    </li>
+
                     <!-- logout -->
                     <li class="menu-item">
                         <a href="{{ route('logout') }}" class="menu-link">
