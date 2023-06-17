@@ -16,6 +16,31 @@ use Notification;
 
 class WaliMuridPembayaranController extends Controller
 {
+    public function index()
+    {
+        $pembayaran = Pembayaran::where('wali_id', auth()->user()->id)
+            ->latest()
+            ->orderBy('tanggal_konfirmasi', 'desc')
+            ->paginate(50);
+
+        $data = [
+            'models'    => $pembayaran,
+            'title'     => 'DATA PEMBAYARAN',
+        ];
+
+        return view('wali.pembayaran_index', $data);
+    }
+
+    public function show(Pembayaran $pembayaran)
+    {
+        auth()->user()->unreadNotifications->where('id', request('id'))->first()?->markAsRead();
+
+        return view('wali.pembayaran_show', [
+            'model' => $pembayaran,
+            'route' => ['pembayaran.update', $pembayaran->id],
+        ]);
+    }
+
     public function create(Request $request)
     {
         // return $request->bank_sekolah_id;
