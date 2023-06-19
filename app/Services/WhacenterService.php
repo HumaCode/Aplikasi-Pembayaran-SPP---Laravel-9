@@ -9,8 +9,8 @@ class WhacenterService
 
     protected string $to;
     protected array $lines;
-    protected string $baseUrl = '';
-    protected string $deviceId = '';
+    protected string $baseUrl = 'https://app.whacenter.com/api/send';
+    protected string $deviceId = 'a235f4ac1bc1a5b0ded8110cd4a1e082';
 
 
     /**
@@ -20,8 +20,8 @@ class WhacenterService
     public function __construct($lines = [])
     {
         $this->lines = $lines;
-        $this->baseUrl = 'https://app.whacenter.com/api';
-        $this->deviceId = 'device_id-dari-wha-center';
+        $this->baseUrl = 'https://app.whacenter.com/api/send';
+        $this->deviceId = 'a235f4ac1bc1a5b0ded8110cd4a1e082';
     }
 
     public function getDeviceStatus()

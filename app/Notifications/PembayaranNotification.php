@@ -32,8 +32,8 @@ class PembayaranNotification extends Notification
      */
     public function via($notifiable)
     {
-        // return ['database', WhacenterChannel::class];
-        return ['database'];
+        return ['database', WhacenterChannel::class];
+        // return ['database'];
     }
 
     /**
