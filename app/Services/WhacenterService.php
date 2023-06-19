@@ -20,8 +20,8 @@ class WhacenterService
     public function __construct($lines = [])
     {
         $this->lines = $lines;
-        $this->baseUrl = 'https://app.whacenter.com/api/send';
-        $this->deviceId = 'a235f4ac1bc1a5b0ded8110cd4a1e082';
+        $this->baseUrl = '';
+        $this->deviceId = '';
     }
 
     public function getDeviceStatus()
