@@ -8,9 +8,11 @@ use App\Models\Biaya;
 use App\Models\Pembayaran;
 use App\Models\Siswa;
 use App\Models\Tagihan as Model;
+use App\Models\Tagihan;
 use App\Models\TagihanDetail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TagihanController extends Controller
 {
@@ -62,10 +64,10 @@ class TagihanController extends Controller
             'route'     => $this->routePrefix . '.store',
             'button'    => 'Simpan Data',
             'title'     => 'Tambah Data Tagihan',
-            'angkatan'  => $siswa->pluck('angkatan', 'angkatan'),
-            'kelas'     => $siswa->pluck('kelas', 'kelas'),
+            // 'angkatan'  => $siswa->pluck('angkatan', 'angkatan'),
+            // 'kelas'     => $siswa->pluck('kelas', 'kelas'),
             // 'biaya'     => Biaya::get()->pluck('nama_biaya_full', 'id'),
-            'biaya'     => Biaya::get(),
+            // 'biaya'     => Biaya::get(),
         ];
 
         return view('operator.' . $this->viewCreate, $data);
@@ -80,21 +82,12 @@ class TagihanController extends Controller
     public function store(StoreTagihanRequest $request)
     {
         $requestData = $request->validated();
-        $biayaIdArray = $requestData['biaya_id'];
-        $siswa = Siswa::query();
-        if ($requestData['kelas'] != '') {
-            $siswa->where('kelas', $requestData['kelas']);
-        }
-        if ($requestData['angkatan'] != '') {
-            $siswa->where('angkatan', $requestData['angkatan']);
-        }
-        $siswa = $siswa->get();
+        DB::beginTransaction();
+
+        // ambil data siswa yang statusnya aktif
+        $siswa = Siswa::currentStatus('aktif')->get();
 
         foreach ($siswa as $itemSiswa) {
-            $biaya = Biaya::whereIn('id', $biayaIdArray)->get();
-
-
-            unset($requestData['biaya_id']);
             $requestData['siswa_id']    = $itemSiswa->id;
             $requestData['status']      = 'baru';
             $tanggalTagihan             = Carbon::parse($requestData['tanggal_tagihan']);
@@ -108,7 +101,8 @@ class TagihanController extends Controller
 
             if ($cekTagihan == null) {
                 // simpan data
-                $tagihan = Model::create($requestData);
+                $tagihan = Tagihan::create($requestData);
+                $biaya = $itemSiswa->biaya->childern;
 
                 foreach ($biaya as $itemBiaya) {
 
@@ -120,6 +114,8 @@ class TagihanController extends Controller
                 }
             }
         }
+
+        DB::commit();
 
         flash('Data tagihan berhasil disimpan')->success();
         return back();

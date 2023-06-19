@@ -6,6 +6,7 @@ use App\Http\Middleware\Wali;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use Spatie\ModelStatus\HasStatuses;
 
@@ -61,5 +62,15 @@ class Siswa extends Model
             // 'name' => '<span class"text-danger"><b>Belum dilengkapi</b></span>',
             'name' => 'Belum dilengkapi',
         ]);
+    }
+
+    /**
+     * Get all of the tagihan for the Siswa
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tagihan(): HasMany
+    {
+        return $this->hasMany(Tagihan::class);
     }
 }

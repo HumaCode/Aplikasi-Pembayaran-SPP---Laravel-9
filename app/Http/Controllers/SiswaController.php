@@ -172,16 +172,21 @@ class SiswaController extends Controller
     public function destroy($id)
     {
         // return auth()->user()->id;
-        $model = Model::findOrFail($id);
+        $siswa = Model::findOrFail($id);
 
-        if ($model->foto != null) {
-            // unlink
-            Storage::delete($model->foto);
+        if ($siswa->tagihan->count() >= 1) {
+            flash('Data tidak bisa dihapus, karena memiliki tagihan')->error();
+            return back();
         }
 
-        $model->delete();
+        if ($siswa->foto != null) {
+            // unlink
+            Storage::delete($siswa->foto);
+        }
 
-        flash('Data berhasil dihapus');
+        $siswa->delete();
+
+        flash('Data berhasil dihapus')->success();
         return back();
     }
 }

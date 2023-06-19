@@ -10,17 +10,12 @@
 
                 {!! Form::model($model, ['route' => $route, 'method' => $method]) !!}
 
-                {{-- <div class="form-group mb-3">
-                    {!! Form::label('biaya_id', 'Biaya Tagihan', ['class' => 'mb-1']) !!}
-                    {!! Form::select('biaya_id', $biaya, null, ['class' => 'form-control', 'multiple' => true]) !!}
-                    <span class="text-danger">{{ $errors->first('biaya_id') }}</span>
-                </div> --}}
 
-                <label class="mb-1">Tagihan Untuk</label>
-                <div class="mb-3">
+                {{-- <label class="mb-1">Tagihan Untuk</label> --}}
+                {{-- <div class="mb-3"> --}}
                     {{-- @dd($biaya); --}}
 
-                    @foreach ($biaya as $item)
+                    {{-- @foreach ($biaya as $item)
 
                     <div class="form-check mb-2">
 
@@ -34,9 +29,9 @@
                     </div>
 
                     @endforeach
-                </div>
+                </div> --}}
 
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-3">
                             {!! Form::label('angkatan', 'Tagihan Untuk Angkatan', ['class' => 'mb-1']) !!}
@@ -53,7 +48,7 @@
                             <span class="text-danger">{{ $errors->first('kelas') }}</span>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="row">
                     <div class="col-md-6">
