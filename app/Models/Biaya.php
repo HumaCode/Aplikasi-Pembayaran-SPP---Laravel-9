@@ -71,4 +71,14 @@ class Biaya extends Model
             $biaya->user_id = auth()->user()->id;
         });
     }
+
+    /**
+     * Get all of the siswa for the Biaya
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function siswa(): HasMany
+    {
+        return $this->hasMany(Siswa::class);
+    }
 }

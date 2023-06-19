@@ -141,6 +141,11 @@ class BiayaController extends Controller
     {
         $model = Model::findOrFail($id);
 
+        if ($model->siswa->count() >= 1) {
+            flash('Data gagal dihapus, karena memiliki relasi ke tabel siswa.')->error();
+            return back();
+        }
+
         if ($model->childern->count() >= 1) {
             flash('Data tidak bisa dihapus, karena masih memiliki item biaya. Silahkan hapus item biaya terlebih dahulu.')->error();
             return back();
@@ -148,7 +153,7 @@ class BiayaController extends Controller
 
         $model->delete();
 
-        flash('Data berhasil dihapus');
+        flash('Data berhasil dihapus')->success();
         return back();
     }
 
@@ -156,10 +161,9 @@ class BiayaController extends Controller
     {
         $model = Model::findOrFail($id);
 
-
         $model->delete();
 
-        flash('Data berhasil dihapus');
+        flash('Data berhasil dihapus')->success();
         return back();
     }
 }
