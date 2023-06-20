@@ -42,6 +42,8 @@
     <link rel="stylesheet" href="{{ asset('assets') }}/font/css/all.min.css" />
     <!-- Page CSS -->
 
+
+
     <!-- Helpers -->
     <script src="{{ asset('assets') }}/vendor/js/helpers.js"></script>
 
@@ -49,30 +51,37 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('assets') }}/js/config.js"></script>
 
+    <style>
+        .pagination {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+
     <script>
         const popupCenter = ({url, title, w, h}) => {
-        // Fixes dual-screen position                             Most browsers      Firefox
-        const dualScreenLeft = window.screenLeft !==  undefined ? window.screenLeft : window.screenX;
-        const dualScreenTop = window.screenTop !==  undefined   ? window.screenTop  : window.screenY;
-
-        const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
-        const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
-
-        const systemZoom = width / window.screen.availWidth;
-        const left = (width - w) / 2 / systemZoom + dualScreenLeft
-        const top = (height - h) / 2 / systemZoom + dualScreenTop
-        const newWindow = window.open(url, title, 
-        `
-        scrollbars=yes,
-        width=${w / systemZoom}, 
-        height=${h / systemZoom}, 
-        top=${top}, 
-        left=${left}
-        `
-        )
-
-        if (window.focus) newWindow.focus();
-    }
+         // Fixes dual-screen position                             Most browsers      Firefox
+         const dualScreenLeft = window.screenLeft !==  undefined ? window.screenLeft : window.screenX;
+         const dualScreenTop = window.screenTop !==  undefined   ? window.screenTop  : window.screenY;
+ 
+         const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+         const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+ 
+         const systemZoom = width / window.screen.availWidth;
+         const left = (width - w) / 2 / systemZoom + dualScreenLeft
+         const top = (height - h) / 2 / systemZoom + dualScreenTop
+         const newWindow = window.open(url, title, 
+         `
+         scrollbars=yes,
+         width=${w / systemZoom}, 
+         height=${h / systemZoom}, 
+         top=${top}, 
+         left=${left}
+         `
+         )
+ 
+         if (window.focus) newWindow.focus();
+     }
     </script>
 </head>
 
@@ -216,11 +225,9 @@
 
 
                             <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
-                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
-                                    data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle hide-arrow " href="javascript:void(0);"
+                                    data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
                                     <i class="bx bx-bell bx-sm"></i>
-
-
                                     @if (auth()->user()->unreadNotifications->count() >= 1)
                                     <span class="badge bg-danger rounded-pill badge-notifications">
                                         {{ auth()->user()->unreadNotifications->count() }}
@@ -229,7 +236,7 @@
 
                                     @endif
                                 </a>
-                                <ul class="dropdown-menu dropdown-menu-end py-0">
+                                <ul class="dropdown-menu dropdown-menu-end py-0 " data-bs-popper="static">
                                     <li class="dropdown-menu-header border-bottom">
                                         <div class="dropdown-header d-flex align-items-center py-3">
                                             <h5 class="text-body mb-0 me-auto">Notifikasi</h5>
@@ -244,15 +251,14 @@
                                         <ul class="list-group list-group-flush">
 
                                             @foreach (auth()->user()->unreadNotifications as $notification)
-
                                             <li
                                                 class="list-group-item list-group-item-action dropdown-notifications-item">
 
                                                 <a
                                                     href="{{ url($notification->data['url'] . '?id=' . $notification->id) }}">
-
                                                     <div class="d-flex">
                                                         <div class="flex-shrink-0 me-3">
+
                                                         </div>
                                                         <div class="flex-grow-1">
                                                             <h6 class="mb-1">{{ $notification->data['title'] }}</h6>
@@ -272,6 +278,7 @@
                                                         </div>
                                                     </div>
                                                 </a>
+
                                             </li>
                                             @endforeach
 
@@ -286,7 +293,7 @@
                                     <li class="dropdown-menu-footer border-top">
                                         <a href="javascript:void(0);"
                                             class="dropdown-item d-flex justify-content-center p-3">
-                                            Lihat semua notifikasi
+                                            View all notifications
                                         </a>
                                     </li>
                                 </ul>

@@ -28,10 +28,10 @@
                                 <td>Wali Murid</td>
                                 <td>Nama</td>
                                 <td>NISN</td>
-                                <td>Jurusan</td>
                                 <td>Kelas</td>
                                 <td>Angkatan</td>
                                 <td>Total Biaya</td>
+                                {{-- <td>Status Akun</td> --}}
                                 <td>Aksi</td>
                             </tr>
                         </thead>
@@ -50,10 +50,10 @@
                                 </td>
                                 <td>{{ $item->nama }}</td>
                                 <td>{{ $item->nisn }}</td>
-                                <td>{{ $item->jurusan }}</td>
                                 <td>{{ $item->kelas }}</td>
                                 <td>{{ $item->angkatan }}</td>
                                 <td><small>{{ format_rupiah($item->biaya?->first()->total_tagihan) }}</small></td>
+                                {{-- <td>{{ $item->status->getStatus() }}</td> --}}
                                 <td width="250" class="text-center">
 
                                     {!! Form::open([

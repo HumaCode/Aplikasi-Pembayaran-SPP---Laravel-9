@@ -26,15 +26,17 @@ class SiswaController extends Controller
      */
     public function index(Request $request)
     {
+        $models = Model::with('wali', 'user');
+
         // pencarian
         if ($request->filled('q')) {
-            $models = Model::with('wali', 'user')->search($request->q)->paginate(settings()->get('app_pagination', 50));
+            $models = $models->search($request->q);
         } else {
-            $models = Model::with('wali', 'user')->latest()->paginate(settings()->get('app_pagination', 50));
+            $models = $models->latest();
         }
 
         return view('operator.' . $this->viewIndex, [
-            'models'        => $models,
+            'models'        => $models->paginate(settings()->get('app_pagination', 50)),
             'title'         => 'Data Siswa',
             'routePrefix'   => $this->routePrefix,
         ]);
@@ -78,16 +80,10 @@ class SiswaController extends Controller
             $requestData['wali_status'] = 'ok';
         }
 
-        $requestData['user_id'] = auth()->user()->id;
-
-        $siswa = Model::create($requestData);
-
-        $siswa->setStatus('aktif');
+        Model::create($requestData);
 
         flash('Data berhasil ditambahkan');
-
         return back();
-        // return redirect()->route('/wali');
     }
 
     /**
@@ -151,8 +147,6 @@ class SiswaController extends Controller
         if ($request->filled('wali_id')) {
             $requestData['wali_status'] = 'ok';
         }
-
-        $requestData['user_id'] = auth()->user()->id;
 
         $model->fill($requestData);
         $model->save();
