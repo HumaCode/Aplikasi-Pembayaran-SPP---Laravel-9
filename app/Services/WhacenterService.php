@@ -10,6 +10,7 @@ class WhacenterService
     protected string $to;
     protected array $lines;
     protected string $baseUrl = 'https://app.whacenter.com/api/send';
+    protected string $baseUrl2 = 'https://app.whacenter.com/api';
     protected string $deviceId = 'a235f4ac1bc1a5b0ded8110cd4a1e082';
 
 
@@ -20,8 +21,9 @@ class WhacenterService
     public function __construct($lines = [])
     {
         $this->lines = $lines;
-        $this->baseUrl = '';
-        $this->deviceId = '';
+        // $this->baseUrl = 'https://app.whacenter.com/api/send';
+        // $this->baseUrl2 = 'https://app.whacenter.com/api';
+        // $this->deviceId = 'a235f4ac1bc1a5b0ded8110cd4a1e082';
     }
 
     public function getDeviceStatus()
@@ -43,13 +45,13 @@ class WhacenterService
         return $this;
     }
 
-    public function send(): mixed
+    public function send(): string
     {
         if ($this->to == '' || count($this->lines) <= 0) {
             throw new \Exception('Message not correct.');
         }
         $params = 'device_id=' . $this->deviceId . '&number=' . $this->to . '&message=' . urlencode(implode("\n", $this->lines));
-        $response = Http::get($this->baseUrl . '/send?' . $params);
+        $response = Http::post($this->baseUrl2 . '/send?' . $params);
         return $response->body();
     }
 }

@@ -10,9 +10,12 @@ use App\Models\Siswa;
 use App\Models\Tagihan as Model;
 use App\Models\Tagihan;
 use App\Models\TagihanDetail;
+use App\Models\User;
+use App\Notifications\TagihanNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 
 class TagihanController extends Controller
 {
@@ -100,8 +103,12 @@ class TagihanController extends Controller
                 ->first();
 
             if ($cekTagihan == null) {
+
+
                 // simpan data
                 $tagihan = Tagihan::create($requestData);
+                Notification::send($tagihan->siswa->wali, new TagihanNotification($tagihan));
+
                 $biaya = $itemSiswa->biaya->childern;
 
                 foreach ($biaya as $itemBiaya) {

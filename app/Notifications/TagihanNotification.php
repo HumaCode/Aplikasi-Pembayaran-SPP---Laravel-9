@@ -2,14 +2,15 @@
 
 namespace App\Notifications;
 
+use App\Channels\WhacenterChannel;
 use App\Services\WhacenterService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\URL;
+use URL;
 
-class PembayaranNotification extends Notification
+class TagihanNotification extends Notification
 {
     use Queueable;
 
@@ -18,10 +19,10 @@ class PembayaranNotification extends Notification
      *
      * @return void
      */
-    private $pembayaran;
-    public function __construct($pembayaran)
+    private $tagihan;
+    public function __construct($tagihan)
     {
-        $this->pembayaran = $pembayaran;
+        $this->tagihan = $tagihan;
     }
 
     /**
@@ -34,24 +35,25 @@ class PembayaranNotification extends Notification
     {
         $url = 'https://app.whacenter.com/api/send';
         $ch = curl_init($url);
-        $url2 = URL::temporarySignedRoute(
+        $url2  = URL::temporarySignedRoute(
             'login.url',
             now()->addDays(10),
             [
-                'pembayaran_id' => $this->pembayaran->id,
+                'tagihan_id' => $this->tagihan->id,
                 'user_id' => $notifiable->id,
-                'url' => route('pembayaran.show', $this->pembayaran->id),
+                'url' => route('wali.tagihan.show', $this->tagihan->id),
             ]
         );
 
-        $nohp = $notifiable->nohp;
-        $pesan = "Halo Operator. ```\n" .
-            "Ada Pembayaran Tagihan SPP yang Masuk. ```\n"  .
-            "```\n" .
-            $this->pembayaran->wali->name .  " Telah melakukan pembayaran tagihan. ```\n" .
-            "```\n" .
-            "Untuk melihat info pembayaran, klik link berikut ```\n" . $url2 .
 
+        $bulanTagihan = $this->tagihan->tanggal_tagihan->translatedFormat('F Y');
+        $nohp = $notifiable->nohp;
+        $pesan = "Assalammualaikum... ```\n" .
+            "Berikut kami kirim informasi tagihan spp untuk bulan "  . $bulanTagihan . " atas nama " . $this->tagihan->siswa->nama .
+            "```\n" .
+            "Jika sudah melakukan pembayaran, silahkan klik link berikut " . $url2  .
+            "```\n" .
+            "Link ini hanya berlaku 3 Hari. " .
             "JANGAN BERIKAN LINK INI KE SIAPAPUN.!!";
 
         $chunks = str_split($pesan, 1000);
@@ -76,6 +78,7 @@ class PembayaranNotification extends Notification
             echo "Pesan ke-" . ($index + 1) . " berhasil dikirim.\n";
         }
         curl_close($ch);
+
 
         // return ['database', WhacenterChannel::class];
         return ['database'];
@@ -104,12 +107,10 @@ class PembayaranNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'tagihan_id'        => $this->pembayaran->tagihan_id,
-            'wali_id'           => $this->pembayaran->wali_id,
-            'pembayaran_id'     => $this->pembayaran->id,
-            'title'             => 'Pembayaran Tagihan',
-            'messages'          => $this->pembayaran->wali->name . ' telah melakukan pembayaran tagihan.',
-            'url'               => route('pembayaran.show', $this->pembayaran->id),
+            'tagihan_id'     => $this->tagihan->id,
+            'title'             => 'Tagihan SPP ' . $this->tagihan->siswa->nama,
+            'messages'          => 'Tagihan SPP Bulan ' . $this->tagihan->tanggal_tagihan->translatedFormat('F Y'),
+            'url'               => route('wali.tagihan.show', $this->tagihan->id),
         ];
     }
 
@@ -119,18 +120,20 @@ class PembayaranNotification extends Notification
             'login.url',
             now()->addDays(10),
             [
-                'pembayaran_id' => $this->pembayaran->id,
+                'tagihan_id' => $this->tagihan->id,
                 'user_id' => $notifiable->id,
-                'url' => route('pembayaran.show', $this->pembayaran->id),
+                'url' => route('wali.tagihan.show', $this->tagihan->id),
             ]
         );
 
+        $bulanTagihan = $this->tagihan->tanggal_tagihan->translatedFormat('F Y');
+
         return (new WhacenterService())
             ->to($notifiable->nohp)
-            ->line("Halo Operator")
-            ->line("Ada Pembayaran Tagihan SPP yang Masuk")
-            ->line($this->pembayaran->wali->name .  ' Telah melakukan pembayaran tagihan.')
-            ->line('Untuk melihat info pembayaran, klik link berikut' . $url)
-            ->line('JANGAN BERIKAN LINK INI KE SIAPAPUN.!!');
+            ->line("Assalammualaikum..")
+            ->line("Berikut kami kirim informasi tagihan spp untuk bulan " . $bulanTagihan . " atas nama " . $this->tagihan->siswa->nama)
+            ->line("Jika sudah melakukan pembayaran, silahkan klik link berikut." . $url)
+            ->line("Link ini hanya berlaku 3 Hari.")
+            ->line("JANGAN BERIKAN LINK INI KE SIAPAPUN.!!");
     }
 }
