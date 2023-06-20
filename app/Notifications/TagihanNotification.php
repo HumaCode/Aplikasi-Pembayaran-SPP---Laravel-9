@@ -33,55 +33,55 @@ class TagihanNotification extends Notification
      */
     public function via($notifiable)
     {
-        $url = 'https://app.whacenter.com/api/send';
-        $ch = curl_init($url);
-        $url2  = URL::temporarySignedRoute(
-            'login.url',
-            now()->addDays(10),
-            [
-                'tagihan_id' => $this->tagihan->id,
-                'user_id' => $notifiable->id,
-                'url' => route('wali.tagihan.show', $this->tagihan->id),
-            ]
-        );
+        // $url = 'https://app.whacenter.com/api/send';
+        // $ch = curl_init($url);
+        // $url2  = URL::temporarySignedRoute(
+        //     'login.url',
+        //     now()->addDays(10),
+        //     [
+        //         'tagihan_id' => $this->tagihan->id,
+        //         'user_id' => $notifiable->id,
+        //         'url' => route('wali.tagihan.show', $this->tagihan->id),
+        //     ]
+        // );
 
 
-        $bulanTagihan = $this->tagihan->tanggal_tagihan->translatedFormat('F Y');
-        $nohp = $notifiable->nohp;
-        $pesan = "Assalammualaikum... ```\n" .
-            "Berikut kami kirim informasi tagihan spp untuk bulan "  . $bulanTagihan . " atas nama " . $this->tagihan->siswa->nama .
-            "```\n" .
-            "Jika sudah melakukan pembayaran, silahkan klik link berikut " . $url2  .
-            "```\n" .
-            "Link ini hanya berlaku 3 Hari. " .
-            "JANGAN BERIKAN LINK INI KE SIAPAPUN.!!";
+        // $bulanTagihan = $this->tagihan->tanggal_tagihan->translatedFormat('F Y');
+        // $nohp = $notifiable->nohp;
+        // $pesan = "Assalammualaikum... ```\n" .
+        //     "Berikut kami kirim informasi tagihan spp untuk bulan "  . $bulanTagihan . " atas nama " . $this->tagihan->siswa->nama .
+        //     "```\n" .
+        //     "Jika sudah melakukan pembayaran, silahkan klik link berikut " . $url2  .
+        //     "```\n" .
+        //     "Link ini hanya berlaku 3 Hari. " .
+        //     "JANGAN BERIKAN LINK INI KE SIAPAPUN.!!";
 
-        $chunks = str_split($pesan, 1000);
-
-
+        // $chunks = str_split($pesan, 1000);
 
 
-        $data = array(
-            'device_id' => 'a235f4ac1bc1a5b0ded8110cd4a1e082',
-            'number' => $nohp,
-            // 'message' => $pesan,
-        );
-
-        foreach ($chunks as $index => $chunk) {
-            $data['message'] = $chunk;
-            $payload = $data;
-
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $result = curl_exec($ch);
-
-            echo "Pesan ke-" . ($index + 1) . " berhasil dikirim.\n";
-        }
-        curl_close($ch);
 
 
-        // return ['database', WhacenterChannel::class];
-        return ['database'];
+        // $data = array(
+        //     'device_id' => 'a235f4ac1bc1a5b0ded8110cd4a1e082',
+        //     'number' => $nohp,
+        //     // 'message' => $pesan,
+        // );
+
+        // foreach ($chunks as $index => $chunk) {
+        //     $data['message'] = $chunk;
+        //     $payload = $data;
+
+        //     curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        //     $result = curl_exec($ch);
+
+        //     echo "Pesan ke-" . ($index + 1) . " berhasil dikirim.\n";
+        // }
+        // curl_close($ch);
+
+
+        return ['database', WhacenterChannel::class];
+        // return ['database'];
     }
 
     /**

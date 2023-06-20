@@ -52,7 +52,7 @@ class PembayaranNotification extends Notification
             "```\n" .
             "Untuk melihat info pembayaran, klik link berikut ```\n" . $url2 .
 
-            "JANGAN BERIKAN LINK INI KE SIAPAPUN.!!";
+            "\n JANGAN BERIKAN LINK INI KE SIAPAPUN.!!";
 
         $chunks = str_split($pesan, 1000);
 

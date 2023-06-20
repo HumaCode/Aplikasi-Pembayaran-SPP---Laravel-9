@@ -142,6 +142,8 @@ class WaliMuridPembayaranController extends Controller
             $pembayaran = Pembayaran::create($dataPembayaran);
 
             $userOperator = User::where('akses', 'operator')->get();
+            // dd($userOperator);
+
             Notification::send($userOperator, new PembayaranNotification($pembayaran));
 
             DB::commit();

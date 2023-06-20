@@ -47,11 +47,14 @@ class WhacenterService
 
     public function send(): string
     {
-        if ($this->to == '' || count($this->lines) <= 0) {
-            throw new \Exception('Message not correct.');
+        if ($this->to != '') {
+            $params = 'device_id=' . $this->deviceId . '&number=' . $this->to . '&message=' . urlencode(implode("\n", $this->lines));
+            $response = Http::get($this->baseUrl . '?' . $params);
+            return $response->body();
+            dd($response);
         }
-        $params = 'device_id=' . $this->deviceId . '&number=' . $this->to . '&message=' . urlencode(implode("\n", $this->lines));
-        $response = Http::post($this->baseUrl2 . '/send?' . $params);
-        return $response->body();
+
+
+        return 'No number to send';
     }
 }
