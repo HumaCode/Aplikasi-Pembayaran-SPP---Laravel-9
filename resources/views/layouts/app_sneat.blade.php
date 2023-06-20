@@ -7,7 +7,8 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>{{ setting()->get('app_name', 'Aplikasi Pembayaran SPP') }}</title>
+    <title>{{ @$title != '' ? $title . ' | ' : '' }} {{ setting()->get('app_name', 'Aplikasi Pembayaran SPP') }}
+    </title>
 
     <meta name="description" content="" />
 
@@ -138,7 +139,7 @@
                                 </g>
                             </svg>
                         </span>
-                        <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+                        <span class="app-brand-text demo menu-text fw-bolder ms-2">SPP ONLINE</span>
                     </a>
 
                     <a href="javascript:void(0);"
