@@ -19586,6 +19586,243 @@
      
 }
 
+    namespace QCod\AppSettings { 
+            /**
+     * 
+     *
+     */ 
+        class Facade {
+                    /**
+         * Sets the settings storage.
+         *
+         * @param \QCod\Settings\Setting\SettingStorage $settingStorage
+         * @static 
+         */ 
+        public static function setSettingStorage($settingStorage)
+        {
+                        /** @var \QCod\AppSettings\Setting\AppSettings $instance */
+                        return $instance->setSettingStorage($settingStorage);
+        }
+                    /**
+         * Sets the current storage group.
+         *
+         * @param string $groupName
+         * @static 
+         */ 
+        public static function setStorageGroup($groupName)
+        {
+                        /** @var \QCod\AppSettings\Setting\AppSettings $instance */
+                        return $instance->setStorageGroup($groupName);
+        }
+                    /**
+         * Get all the settings from storage
+         *
+         * @param bool $fresh
+         * @return \Illuminate\Support\Collection 
+         * @static 
+         */ 
+        public static function all($fresh = false)
+        {
+                        /** @var \QCod\AppSettings\Setting\AppSettings $instance */
+                        return $instance->all($fresh);
+        }
+                    /**
+         * Get a setting and cast the value
+         *
+         * @param $name
+         * @param null $default
+         * @return mixed 
+         * @static 
+         */ 
+        public static function get($name, $default = null)
+        {
+                        /** @var \QCod\AppSettings\Setting\AppSettings $instance */
+                        return $instance->get($name, $default);
+        }
+                    /**
+         * Save a setting into storage
+         *
+         * @param $name string|array
+         * @param $value string|mixed
+         * @return mixed 
+         * @static 
+         */ 
+        public static function set($name, $value)
+        {
+                        /** @var \QCod\AppSettings\Setting\AppSettings $instance */
+                        return $instance->set($name, $value);
+        }
+                    /**
+         * Remove a setting from storage
+         *
+         * @param $name
+         * @return mixed 
+         * @static 
+         */ 
+        public static function remove($name)
+        {
+                        /** @var \QCod\AppSettings\Setting\AppSettings $instance */
+                        return $instance->remove($name);
+        }
+                    /**
+         * Save incoming settings
+         *
+         * @param $request \Illuminate\Http\Request
+         * @static 
+         */ 
+        public static function save($request)
+        {
+                        /** @var \QCod\AppSettings\Setting\AppSettings $instance */
+                        return $instance->save($request);
+        }
+                    /**
+         * Load and resolve closers in config
+         *
+         * @param $config
+         * @return array 
+         * @static 
+         */ 
+        public static function loadConfig($config)
+        {
+                        /** @var \QCod\AppSettings\Setting\AppSettings $instance */
+                        return $instance->loadConfig($config);
+        }
+                    /**
+         * Get all the setting fields defined from all sections
+         *
+         * @return \Illuminate\Support\Collection 
+         * @static 
+         */ 
+        public static function getAllSettingFields()
+        {
+                        /** @var \QCod\AppSettings\Setting\AppSettings $instance */
+                        return $instance->getAllSettingFields();
+        }
+                    /**
+         * Get a single setting field config
+         *
+         * @param $name
+         * @return array 
+         * @static 
+         */ 
+        public static function getSettingField($name)
+        {
+                        /** @var \QCod\AppSettings\Setting\AppSettings $instance */
+                        return $instance->getSettingField($name);
+        }
+                    /**
+         * Build validation rules for laravel validator
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getValidationRules()
+        {
+                        /** @var \QCod\AppSettings\Setting\AppSettings $instance */
+                        return $instance->getValidationRules();
+        }
+         
+    }
+     
+}
+
+    namespace QCod\Settings { 
+            /**
+     * 
+     *
+     */ 
+        class Facade {
+                    /**
+         * Get all settings from storage as key value pair.
+         *
+         * @param bool $fresh ignore cached
+         * @return \QCod\Settings\Setting\Collection 
+         * @static 
+         */ 
+        public static function all($fresh = false)
+        {
+                        /** @var \QCod\Settings\Setting\SettingEloquentStorage $instance */
+                        return $instance->all($fresh);
+        }
+                    /**
+         * Get a setting from storage by key.
+         *
+         * @param string $key
+         * @param null $default
+         * @param bool $fresh
+         * @return mixed 
+         * @static 
+         */ 
+        public static function get($key, $default = null, $fresh = false)
+        {
+                        /** @var \QCod\Settings\Setting\SettingEloquentStorage $instance */
+                        return $instance->get($key, $default, $fresh);
+        }
+                    /**
+         * Save a setting in storage.
+         *
+         * @param $key string|array
+         * @param $val string|mixed
+         * @return mixed 
+         * @static 
+         */ 
+        public static function set($key, $val = null)
+        {
+                        /** @var \QCod\Settings\Setting\SettingEloquentStorage $instance */
+                        return $instance->set($key, $val);
+        }
+                    /**
+         * Check if setting with key exists.
+         *
+         * @param $key
+         * @return bool 
+         * @static 
+         */ 
+        public static function has($key)
+        {
+                        /** @var \QCod\Settings\Setting\SettingEloquentStorage $instance */
+                        return $instance->has($key);
+        }
+                    /**
+         * Remove a setting from storage.
+         *
+         * @param $key
+         * @return mixed 
+         * @static 
+         */ 
+        public static function remove($key)
+        {
+                        /** @var \QCod\Settings\Setting\SettingEloquentStorage $instance */
+                        return $instance->remove($key);
+        }
+                    /**
+         * Flush setting cache.
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function flushCache()
+        {
+                        /** @var \QCod\Settings\Setting\SettingEloquentStorage $instance */
+                        return $instance->flushCache();
+        }
+                    /**
+         * Set the group name for settings.
+         *
+         * @param string $groupName
+         * @return \QCod\Settings\Setting\SettingEloquentStorage 
+         * @static 
+         */ 
+        public static function group($groupName)
+        {
+                        /** @var \QCod\Settings\Setting\SettingEloquentStorage $instance */
+                        return $instance->group($groupName);
+        }
+         
+    }
+     
+}
+
     namespace Spatie\LaravelIgnition\Facades { 
             /**
      * 
@@ -23935,6 +24172,8 @@ namespace  {
             class Flash extends \Laracasts\Flash\Flash {}
             class Form extends \Collective\Html\FormFacade {}
             class Html extends \Collective\Html\HtmlFacade {}
+            class AppSettings extends \QCod\AppSettings\Facade {}
+            class Settings extends \QCod\Settings\Facade {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
      
 }

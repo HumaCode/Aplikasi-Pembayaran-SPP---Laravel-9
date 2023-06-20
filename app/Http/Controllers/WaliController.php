@@ -27,7 +27,7 @@ class WaliController extends Controller
         return view('operator.' . $this->viewIndex, [
             'models' => Model::wali()
                 ->latest()
-                ->paginate(50),
+                ->paginate(settings()->get('app_pagination', 50)),
             'title' => 'Data Wali Murid',
             'routePrefix' => $this->routePrefix,
         ]);

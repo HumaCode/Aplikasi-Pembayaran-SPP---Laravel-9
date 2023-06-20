@@ -22,7 +22,7 @@ class WaliMuridPembayaranController extends Controller
         $pembayaran = Pembayaran::where('wali_id', auth()->user()->id)
             ->latest()
             ->orderBy('tanggal_konfirmasi', 'desc')
-            ->paginate(50);
+            ->paginate(settings()->get('app_pagination', 50));
 
         $data = [
             'models'    => $pembayaran,

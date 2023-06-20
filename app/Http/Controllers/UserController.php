@@ -26,7 +26,7 @@ class UserController extends Controller
         return view('operator.' . $this->viewIndex, [
             'models' => Model::where('akses', '<>', 'wali')
                 ->latest()
-                ->paginate(50),
+                ->paginate(settings()->get('app_pagination', 50)),
             'title' => 'Data User',
             'routePrefix' => $this->routePrefix,
 

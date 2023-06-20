@@ -18,7 +18,7 @@ class PembayaranController extends Controller
      */
     public function index()
     {
-        $models = Pembayaran::latest()->orderBy('tanggal_konfirmasi', 'desc')->paginate(50);
+        $models = Pembayaran::latest()->orderBy('tanggal_konfirmasi', 'desc')->paginate(settings()->get('app_pagination', 50));
         $data = [
             'models' => $models,
             'title' => 'DATA PEMBAYARAN'

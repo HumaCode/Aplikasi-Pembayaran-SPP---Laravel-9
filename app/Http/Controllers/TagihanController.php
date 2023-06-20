@@ -37,10 +37,10 @@ class TagihanController extends Controller
             $models = Model::with('user', 'siswa', 'tagihanDetail')->latest()
                 ->whereMonth('tanggal_tagihan', $request->bulan)
                 ->whereYear('tanggal_tagihan', $request->tahun)
-                ->paginate(50);
+                ->paginate(settings()->get('app_pagination', 50));
         } else {
 
-            $models = Model::latest()->paginate(50);
+            $models = Model::latest()->paginate(settings()->get('app_pagination', 50));
         }
 
 

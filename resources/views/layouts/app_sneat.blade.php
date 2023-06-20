@@ -7,7 +7,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>{{ config('app.name') }}</title>
+    <title>{{ setting()->get('app_name', 'Aplikasi Pembayaran SPP') }}</title>
 
     <meta name="description" content="" />
 
@@ -51,12 +51,12 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('assets') }}/js/config.js"></script>
 
-    {{-- <style>
-        .layout-navbar .navbar-dropdown .dropdown-menu {
-            min-width: 22rem;
-            overflow: hidden;
+    <style>
+        .pagination {
+            display: flex;
+            justify-content: center;
         }
-    </style> --}}
+    </style>
 
     <script>
         const popupCenter = ({url, title, w, h}) => {
@@ -158,6 +158,13 @@
                         </a>
                     </li>
 
+                    <!-- setting -->
+                    <li class="menu-item {{ \Route::is('setting.*') ? 'active' : '' }}">
+                        <a href="{{ route('setting.create') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-collection"></i>
+                            <div data-i18n="Basic">Pengaturan Aplikasi</div>
+                        </a>
+                    </li>
 
                     <!-- user -->
                     <li class="menu-item {{ \Route::is('user.*') ? 'active' : '' }}">
@@ -166,6 +173,7 @@
                             <div data-i18n="Basic">User</div>
                         </a>
                     </li>
+
 
                     <!-- bank sekolah -->
                     <li class="menu-item {{ \Route::is('banksekolah.*') ? 'active' : '' }}">

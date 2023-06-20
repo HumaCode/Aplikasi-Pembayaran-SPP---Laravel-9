@@ -29,7 +29,7 @@
 
                             @forelse ($models as $item)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td class="text-center">{{ $loop->iteration }}.</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->nohp }}</td>
                                 <td>{{ $item->email }}</td>
@@ -65,8 +65,11 @@
                         </tbody>
                     </table>
 
-                    {{-- pagination --}}
-                    {!! $models->links() !!}
+                    <div class="mt-2">
+                        {{-- pagination --}}
+                        {{ $models->links() }}
+                    </div>
+
 
                 </div>
 
