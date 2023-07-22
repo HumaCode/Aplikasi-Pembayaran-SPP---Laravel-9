@@ -21,6 +21,8 @@ class WaliMuridTagihanController extends Controller
     public function show($id)
     {
         $tagihan = Tagihan::waliSiswa()->findOrFail($id);
+        auth()->user()->unreadNotifications->where('id', request('id'))->first()?->markAsRead();
+
 
         $data = [
             'tagihan'       => $tagihan,

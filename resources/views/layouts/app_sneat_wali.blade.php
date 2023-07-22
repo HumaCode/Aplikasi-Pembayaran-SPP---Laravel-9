@@ -59,29 +59,36 @@
     </style>
 
     <script>
-        const popupCenter = ({url, title, w, h}) => {
-         // Fixes dual-screen position                             Most browsers      Firefox
-         const dualScreenLeft = window.screenLeft !==  undefined ? window.screenLeft : window.screenX;
-         const dualScreenTop = window.screenTop !==  undefined   ? window.screenTop  : window.screenY;
- 
-         const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
-         const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
- 
-         const systemZoom = width / window.screen.availWidth;
-         const left = (width - w) / 2 / systemZoom + dualScreenLeft
-         const top = (height - h) / 2 / systemZoom + dualScreenTop
-         const newWindow = window.open(url, title, 
-         `
+        const popupCenter = ({
+            url,
+            title,
+            w,
+            h
+        }) => {
+            // Fixes dual-screen position                             Most browsers      Firefox
+            const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+            const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+
+            const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document
+                .documentElement.clientWidth : screen.width;
+            const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document
+                .documentElement.clientHeight : screen.height;
+
+            const systemZoom = width / window.screen.availWidth;
+            const left = (width - w) / 2 / systemZoom + dualScreenLeft
+            const top = (height - h) / 2 / systemZoom + dualScreenTop
+            const newWindow = window.open(url, title,
+                `
          scrollbars=yes,
          width=${w / systemZoom}, 
          height=${h / systemZoom}, 
          top=${top}, 
          left=${left}
          `
-         )
- 
-         if (window.focus) newWindow.focus();
-     }
+            )
+
+            if (window.focus) newWindow.focus();
+        }
     </script>
 </head>
 
@@ -215,8 +222,8 @@
                         <div class="navbar-nav align-items-center">
                             <div class="nav-item d-flex align-items-center">
                                 <i class="bx bx-search fs-4 lh-0"></i>
-                                <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
-                                    aria-label="Search..." />
+                                <input type="text" class="form-control border-0 shadow-none"
+                                    placeholder="Search..." aria-label="Search..." />
                             </div>
                         </div>
                         <!-- /Search -->
@@ -229,11 +236,10 @@
                                     data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">
                                     <i class="bx bx-bell bx-sm"></i>
                                     @if (auth()->user()->unreadNotifications->count() >= 1)
-                                    <span class="badge bg-danger rounded-pill badge-notifications">
-                                        {{ auth()->user()->unreadNotifications->count() }}
-                                    </span>
+                                        <span class="badge bg-danger rounded-pill badge-notifications">
+                                            {{ auth()->user()->unreadNotifications->count() }}
+                                        </span>
                                     @else
-
                                     @endif
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end py-0 " data-bs-popper="static">
@@ -251,43 +257,46 @@
                                         <ul class="list-group list-group-flush">
 
                                             @foreach (auth()->user()->unreadNotifications as $notification)
-                                            <li
-                                                class="list-group-item list-group-item-action dropdown-notifications-item">
+                                                <li
+                                                    class="list-group-item list-group-item-action dropdown-notifications-item">
 
-                                                <a
-                                                    href="{{ url($notification->data['url'] . '?id=' . $notification->id) }}">
-                                                    <div class="d-flex">
-                                                        <div class="flex-shrink-0 me-3">
+                                                    <a
+                                                        href="{{ url($notification->data['url'] . '?id=' . $notification->id) }}">
+                                                        <div class="d-flex">
+                                                            <div class="flex-shrink-0 me-3">
 
+                                                            </div>
+                                                            <div class="flex-grow-1">
+                                                                <h6 class="mb-1">{{ $notification->data['title'] }}
+                                                                </h6>
+                                                                <p class="mb-0">
+                                                                    {{ ucwords($notification->data['messages']) }}
+                                                                </p>
+                                                                <small
+                                                                    class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
+                                                            </div>
+                                                            <div class="flex-shrink-0 dropdown-notifications-actions">
+                                                                <a href="javascript:void(0)"
+                                                                    class="dropdown-notifications-read"><span
+                                                                        class="badge badge-dot"></span></a>
+                                                                <a href="javascript:void(0)"
+                                                                    class="dropdown-notifications-archive"><span
+                                                                        class="bx bx-x"></span></a>
+                                                            </div>
                                                         </div>
-                                                        <div class="flex-grow-1">
-                                                            <h6 class="mb-1">{{ $notification->data['title'] }}</h6>
-                                                            <p class="mb-0">{{ ucwords($notification->data['messages'])
-                                                                }}
-                                                            </p>
-                                                            <small class="text-muted">{{
-                                                                $notification->created_at->diffForHumans() }}</small>
-                                                        </div>
-                                                        <div class="flex-shrink-0 dropdown-notifications-actions">
-                                                            <a href="javascript:void(0)"
-                                                                class="dropdown-notifications-read"><span
-                                                                    class="badge badge-dot"></span></a>
-                                                            <a href="javascript:void(0)"
-                                                                class="dropdown-notifications-archive"><span
-                                                                    class="bx bx-x"></span></a>
-                                                        </div>
-                                                    </div>
-                                                </a>
+                                                    </a>
 
-                                            </li>
+                                                </li>
                                             @endforeach
 
                                         </ul>
                                         <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
-                                            <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                                            <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;">
+                                            </div>
                                         </div>
                                         <div class="ps__rail-y" style="top: 0px; right: 0px;">
-                                            <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div>
+                                            <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;">
+                                            </div>
                                         </div>
                                     </li>
                                     <li class="dropdown-menu-footer border-top">
@@ -304,7 +313,7 @@
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
                                     data-bs-toggle="dropdown">
                                     <div
-                                        class="avatar {{ auth()->user()->unreadNotifications->count() >= 1 ? 'avatar-online' : '' }}">
+                                        class="avatar {{ auth()->user()->unreadNotifications->count() >= 1? 'avatar-online': '' }}">
                                         <img src="{{ asset('assets') }}/img/avatars/user.png" alt
                                             class="w-px-40 h-auto rounded-circle" />
                                     </div>
@@ -315,13 +324,14 @@
                                             <div class="d-flex">
                                                 <div class="flex-shrink-0 me-3">
                                                     <div
-                                                        class="avatar {{ auth()->user()->unreadNotifications->count() >= 1 ? 'avatar-online' : '' }}">
+                                                        class="avatar {{ auth()->user()->unreadNotifications->count() >= 1? 'avatar-online': '' }}">
                                                         <img src="{{ asset('assets') }}/img/avatars/user.png" alt
                                                             class="w-px-40 h-auto rounded-circle" />
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block">{{ auth()->user()->name }}</span>
+                                                    <span
+                                                        class="fw-semibold d-block">{{ auth()->user()->name }}</span>
                                                     <small class="text-muted">{{ auth()->user()->email }}</small>
                                                 </div>
                                             </div>
@@ -368,12 +378,10 @@
 
                     <div class="container-xxl flex-grow-1 container-p-y">
 
-                        @if($errors->any())
-
-                        <div class="alert alert-danger" role="alert">
-                            {!! implode('', $errors->all('<div>:message</div>')) !!}
-                        </div>
-
+                        @if ($errors->any())
+                            <div class="alert alert-danger" role="alert">
+                                {!! implode('', $errors->all('<div>:message</div>')) !!}
+                            </div>
                         @endif
 
 
@@ -454,7 +462,9 @@
 
     <script>
         $(document).ready(function() {
-            $('.rupiah').mask("#.##0", {reverse: true});
+            $('.rupiah').mask("#.##0", {
+                reverse: true
+            });
             $('.select2').select2();
         })
     </script>

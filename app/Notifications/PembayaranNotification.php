@@ -32,50 +32,50 @@ class PembayaranNotification extends Notification
      */
     public function via($notifiable)
     {
-        $url = 'https://app.whacenter.com/api/send';
-        $ch = curl_init($url);
-        $url2 = URL::temporarySignedRoute(
-            'login.url',
-            now()->addDays(10),
-            [
-                'pembayaran_id' => $this->pembayaran->id,
-                'user_id' => $notifiable->id,
-                'url' => route('pembayaran.show', $this->pembayaran->id),
-            ]
-        );
+        // $url = 'https://app.whacenter.com/api/send';
+        // $ch = curl_init($url);
+        // $url2 = URL::temporarySignedRoute(
+        //     'login.url',
+        //     now()->addDays(10),
+        //     [
+        //         'pembayaran_id' => $this->pembayaran->id,
+        //         'user_id' => $notifiable->id,
+        //         'url' => route('pembayaran.show', $this->pembayaran->id),
+        //     ]
+        // );
 
-        $nohp = $notifiable->nohp;
-        $pesan = "Halo Operator. ```\n" .
-            "Ada Pembayaran Tagihan SPP yang Masuk. ```\n"  .
-            "```\n" .
-            $this->pembayaran->wali->name .  " Telah melakukan pembayaran tagihan. ```\n" .
-            "```\n" .
-            "Untuk melihat info pembayaran, klik link berikut ```\n" . $url2 .
+        // $nohp = $notifiable->nohp;
+        // $pesan = "Halo Operator. ```\n" .
+        //     "Ada Pembayaran Tagihan SPP yang Masuk. ```\n"  .
+        //     "```\n" .
+        //     $this->pembayaran->wali->name .  " Telah melakukan pembayaran tagihan. ```\n" .
+        //     "```\n" .
+        //     "Untuk melihat info pembayaran, klik link berikut ```\n" . $url2 .
 
-            "\n JANGAN BERIKAN LINK INI KE SIAPAPUN.!!";
+        //     "\n JANGAN BERIKAN LINK INI KE SIAPAPUN.!!";
 
-        $chunks = str_split($pesan, 1000);
-
-
+        // $chunks = str_split($pesan, 1000);
 
 
-        $data = array(
-            'device_id' => 'a235f4ac1bc1a5b0ded8110cd4a1e082',
-            'number' => $nohp,
-            // 'message' => $pesan,
-        );
 
-        foreach ($chunks as $index => $chunk) {
-            $data['message'] = $chunk;
-            $payload = $data;
 
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $result = curl_exec($ch);
+        // $data = array(
+        //     'device_id' => 'a235f4ac1bc1a5b0ded8110cd4a1e082',
+        //     'number' => $nohp,
+        //     // 'message' => $pesan,
+        // );
 
-            echo "Pesan ke-" . ($index + 1) . " berhasil dikirim.\n";
-        }
-        curl_close($ch);
+        // foreach ($chunks as $index => $chunk) {
+        //     $data['message'] = $chunk;
+        //     $payload = $data;
+
+        //     curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        //     $result = curl_exec($ch);
+
+        //     echo "Pesan ke-" . ($index + 1) . " berhasil dikirim.\n";
+        // }
+        // curl_close($ch);
 
         // return ['database', WhacenterChannel::class];
         return ['database'];

@@ -80,8 +80,8 @@ class TagihanNotification extends Notification
         // curl_close($ch);
 
 
-        return ['database', WhacenterChannel::class];
-        // return ['database'];
+        // return ['database', WhacenterChannel::class];
+        return ['database'];
     }
 
     /**
